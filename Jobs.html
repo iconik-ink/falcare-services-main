@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Falcare · Jobs & Recruitment</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6428B3;--light:#C3A3E4;--soft:#CBA5ED;--dark:#2E1A40;--accent:#8A67A9}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Montserrat",sans-serif;background:var(--dark);color:#fff;overflow-x:hidden}
+#bg{position:fixed;inset:0;z-index:0;width:100%;height:100%}
+.back{position:fixed;top:16px;left:16px;z-index:50;background:rgba(46,26,64,.8);backdrop-filter:blur(10px);border:1px solid rgba(195,163,228,.3);color:#fff;padding:10px 20px;border-radius:40px;text-decoration:none;font-weight:600;font-size:13px}
+.back:hover{background:var(--primary)}
+.logo{position:fixed;top:10px;right:16px;z-index:50;height:70px}
+.logo img{height:100%;filter:drop-shadow(0 4px 12px rgba(100,40,179,.5))}
+.hero{position:relative;z-index:2;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 20px}
+.hero h1{font-size:clamp(48px,11vw,150px);font-weight:800;line-height:.95;background:linear-gradient(135deg,#fff,var(--light),var(--soft),#fff);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:g 10s ease infinite}
+.hero p{margin-top:20px;letter-spacing:2px;color:var(--light);font-style:italic}
+@keyframes g{50%{background-position:100% 50%}}
+.hint{position:absolute;bottom:32px;font-size:12px;letter-spacing:2px;opacity:.7}
+.stage{position:relative;z-index:2;height:100vh;overflow:hidden;perspective:1200px;display:flex;align-items:center;justify-content:center}
+.card{position:absolute;width:min(92vw,820px);display:grid;grid-template-columns:1fr 1fr;background:rgba(46,26,64,.82);backdrop-filter:blur(14px);border:1px solid rgba(195,163,228,.35);border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);will-change:transform,opacity}
+.card img{width:100%;height:100%;min-height:340px;object-fit:cover}
+.info{padding:28px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.info h3{font-size:1.5rem;color:var(--soft)}
+.loc{font-weight:600}
+.desc{font-size:.9rem;line-height:1.5;color:rgba(255,255,255,.8)}
+.tag{display:inline-block;padding:3px 12px;border-radius:12px;font-size:11px;background:rgba(195,163,228,.15);border:1px solid rgba(195,163,228,.3);margin:2px 2px 0 0}
+.tag.urgent{background:rgba(255,70,70,.18);border-color:rgba(255,100,100,.4)}
+.info label{font-size:.8rem;margin-top:6px}
+.info select{padding:8px;border-radius:8px;border:0;font-family:inherit}
+.info button{background:var(--primary);color:#fff;border:1px solid var(--soft);padding:12px;border-radius:30px;font-weight:700;cursor:pointer;font-family:inherit}
+.info button:hover{background:var(--accent)}
+.counter{position:fixed;left:20px;bottom:20px;z-index:40;font-size:13px;letter-spacing:1px;color:var(--light)}
+.bar{position:fixed;left:0;top:0;height:3px;background:var(--soft);z-index:60;width:0}
+.cartbtn{position:fixed;right:20px;bottom:20px;z-index:60;background:var(--primary);color:#fff;border:1px solid var(--soft);padding:12px 22px;border-radius:30px;font-weight:700;cursor:pointer;font-family:inherit}
+.cartbtn span{background:#fff;color:var(--primary);border-radius:50%;padding:2px 8px;margin-left:6px;font-size:.8rem}
+.drawer{position:fixed;top:0;right:-100%;width:min(100vw,380px);height:100%;background:#fff;color:#222;z-index:100;transition:right .3s;display:flex;flex-direction:column}
+.drawer.open{right:0}
+.drawer header{background:var(--primary);color:#fff;padding:18px;display:flex;justify-content:space-between;align-items:center}
+.drawer header button{background:none;border:0;color:#fff;font-size:26px;cursor:pointer}
+#items{flex:1;overflow:auto;padding:18px}
+.it{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:10px 0;font-size:.9rem}
+.it small{display:block;color:#666}
+.it button{background:none;border:0;cursor:pointer}
+.drawer footer{padding:18px;border-top:1px solid #eee}
+.drawer footer button{width:100%;background:var(--primary);color:#fff;border:0;padding:12px;border-radius:25px;font-weight:700;cursor:pointer}
+.end{position:relative;z-index:2;background:#1a0f2a;padding:50px 20px;text-align:center;color:rgba(255,255,255,.55);font-size:.85rem;line-height:1.8}
+.end h2{color:#fff;margin-bottom:8px}
+@media(max-width:700px){.card{grid-template-columns:1fr}.card img{min-height:0;height:150px}.info{padding:18px;gap:7px}.logo{height:50px}.info h3{font-size:1.2rem}}
+@media(prefers-reduced-motion:reduce){.hero h1{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="bar" id="bar"></div>
+<a href="index.html" class="back">← Back to Home</a>
+<div class="logo"><img src="assets/mum logo-08.svg" alt="Falcare" onerror="this.style.display='none'"></div>
+
+<section class="hero">
+  <h1>Falcare<br>Jobs</h1>
+  <p>Find your next career opportunity</p>
+  <div class="hint">SCROLL TO EXPLORE</div>
+</section>
+
+<section class="stage" id="stage"></section>
+<div class="counter" id="counter"></div>
+
+<button class="cartbtn" id="cartBtn">🛒 Apply <span id="count">0</span></button>
+<aside class="drawer" id="drawer">
+  <header><h3>My Applications</h3><button id="closeBtn">&times;</button></header>
+  <div id="items"></div>
+  <footer id="foot" style="display:none"><button id="submit">📤 Submit Applications</button></footer>
+</aside>
+
+<section class="end">
+  <h2>Falcare</h2>
+  <p>Connecting talent with opportunity across Africa and the Middle East</p>
+  <p>© 2026 Falcare — All rights reserved</p>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============ ADD NEW JOBS HERE ============
+   Copy one block, edit it, done. Cards, scroll length and counter update automatically. */
+const JOBS = [
+  {title:"House Help – Nairobi", place:"Nairobi, Kenya", img:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600",
+   desc:"A Luhya house help urgently needed in Nairobi. Full-time position with accommodation provided.",
+   tags:["🔥 Urgent|urgent","Full Time","Live-in"], roles:["House Help","Care Giver","House Manager"]},
+  {title:"Care Giver – Parklands", place:"Parklands, Nairobi", img:"https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=600",
+   desc:"Urgently hiring a care giver in Parklands. Experienced candidates preferred.",
+   tags:["🔥 Urgent|urgent","Experienced","Full Time"], roles:["Care Giver","Nurse","Health Assistant"]},
+  {title:"Domestic Maid – Karen", place:"Karen, Nairobi", img:"https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600",
+   desc:"Urgently hiring a house help / domestic maid in Karen. Professional and reliable candidates wanted.",
+   tags:["🔥 Urgent|urgent","Full Time","Live-in"], roles:["Domestic Maid","House Help","Cleaner"]},
+  {title:"Domestic Workers – Saudi Arabia", place:"Saudi Arabia", img:"https://images.unsplash.com/photo-1582282078779-85e0b557eb47?w=600",
+   desc:"Kenyan domestic maids and workers needed in Saudi Arabia. Visa sponsored positions available.",
+   tags:["✈️ Visa Sponsored","International","🔥 Urgent|urgent"], roles:["Domestic Maid","Nanny","Housekeeper"]},
+  {title:"Nanny – Kilimani", place:"Kilimani, Nairobi", img:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600",
+   desc:"Loving, experienced nanny needed for two children. Weekdays, live-out.",
+   tags:["Full Time","Live-out"], roles:["Nanny","Care Giver"]},
+  {title:"House Manager – Runda", place:"Runda, Nairobi", img:"https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600",
+   desc:"Organised house manager to supervise staff, shopping and household schedules.",
+   tags:["Experienced","Full Time"], roles:["House Manager","Housekeeper"]},
+     {title:"Nanny – Kilimani", place:"Kilimani, Nairobi", img:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600",
+   desc:"Loving, experienced nanny needed for two children. Weekdays, live-out.",
+   tags:["Full Time","Live-out"], roles:["Nanny","Care Giver"]},
+  {title:"Domestic Workers – Dubai", place:"Dubai, UAE", img:"https://images.unsplash.com/photo-1582282078779-85e0b557eb47?w=600",
+   desc:"Housekeepers and nannies wanted in Dubai. Flights and visa arranged.",
+   tags:["✈️ Visa Sponsored|sponsored","International"], roles:["Housekeeper","Nanny","Cook"]}
+];
+
+/* ---------- Build cards ---------- */
+const stage=document.getElementById('stage');
+JOBS.forEach((j,i)=>{
+  const c=document.createElement('article');c.className='card';
+  c.innerHTML=`<img src="${j.img}" alt="" loading="lazy">
+  <div class="info"><h3>${j.title}</h3><p class="loc">📍 ${j.place}</p><p class="desc">${j.desc}</p>
+  <div>${j.tags.map(t=>{const [x,k]=t.split('|');return `<span class="tag ${k||''}">${x}</span>`}).join('')}</div>
+  <label>Position</label><select>${j.roles.map(r=>`<option>${r}</option>`).join('')}</select>
+  <button>Apply Now</button></div>`;
+  c.querySelector('button').onclick=e=>{
+    addApp(j.title,c.querySelector('select').value);
+    const b=e.target;b.textContent='✅ Applied!';setTimeout(()=>b.textContent='Apply Now',1500);
+  };
+  stage.appendChild(c);
+});
+const cards=gsap.utils.toArray('.card');
+const counter=document.getElementById('counter');
+
+/* ---------- GSAP: pinned scroll, cards fly through 3D space ---------- */
+gsap.registerPlugin(ScrollTrigger);
+let camTarget=0;
+const N=cards.length;
+const tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{
+  trigger:stage,start:'top top',end:()=>'+='+(N*innerHeight*0.9),pin:true,scrub:1,
+  onUpdate:s=>{camTarget=s.progress;counter.textContent=`Job ${Math.min(N,Math.floor(s.progress*N)+1)} of ${N}`}
+}});
+cards.forEach((c,i)=>{
+  const dir=i%2?1:-1;
+  gsap.set(c,{autoAlpha:0});
+  tl.fromTo(c,{z:-1800,x:dir*300,rotationY:dir*-35,autoAlpha:0},{z:0,x:0,rotationY:0,autoAlpha:1,duration:.5,ease:'power2.out'},i)
+    .to(c,{z:900,x:dir*-250,rotationY:dir*30,autoAlpha:0,duration:.5,ease:'power2.in'},i+.75);
+});
+tl.to({}, {duration:.25}); // small tail
+gsap.to('#bar',{width:'100%',ease:'none',scrollTrigger:{trigger:document.body,start:'top top',end:'bottom bottom',scrub:true}});
+gsap.from('.hero h1,.hero p',{y:40,autoAlpha:0,duration:1.2,stagger:.2,ease:'power3.out'});
+
+/* ---------- Three.js background ---------- */
+const canvas=document.getElementById('bg');
+const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene();
+scene.fog=new THREE.FogExp2(0x2E1A40,.035);
+const camera=new THREE.PerspectiveCamera(60,1,.1,200);
+camera.position.z=5;
+const pts=new Float32Array(1500*3);
+for(let i=0;i<pts.length;i+=3){pts[i]=(Math.random()-.5)*40;pts[i+1]=(Math.random()-.5)*30;pts[i+2]=Math.random()*-120+10}
+const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pts,3));
+scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xC3A3E4,size:.12,transparent:true,opacity:.85})));
+const shapes=[];
+const cols=[0x6428B3,0x8A67A9,0xCBA5ED];
+for(let i=0;i<14;i++){
+  const m=new THREE.Mesh(i%2?new THREE.IcosahedronGeometry(1.2,0):new THREE.TorusGeometry(1,.25,12,40),
+    new THREE.MeshBasicMaterial({color:cols[i%3],wireframe:true,transparent:true,opacity:.5}));
+  m.position.set((Math.random()-.5)*18,(Math.random()-.5)*10,-i*8-5);
+  if(Math.abs(m.position.x)<4)m.position.x+=m.position.x<0?-5:5;
+  scene.add(m);shapes.push(m);
+}
+function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+resize();addEventListener('resize',resize);
+const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let camP=0;
+(function loop(t){
+  const scrollY=window.scrollY,H=document.body.scrollHeight-innerHeight;
+  const p=H?scrollY/H:0;
+  camP+=(p-camP)*.06;
+  camera.position.z=5-camP*110;
+  camera.rotation.z=Math.sin(camP*8)*.06;
+  if(!still)shapes.forEach((s,i)=>{s.rotation.x+=.003+i*.0002;s.rotation.y+=.004});
+  renderer.render(scene,camera);
+  requestAnimationFrame(loop);
+})();
+
+/* ---------- Applications drawer ---------- */
+let apps=[];
+const $=id=>document.getElementById(id);
+function render(){
+  $('count').textContent=apps.length;
+  $('foot').style.display=apps.length?'block':'none';
+  $('items').innerHTML=apps.length?apps.map((a,i)=>`<div class="it"><div><b>${a.title}</b><small>${a.role}</small></div><button onclick="rm(${i})">🗑️</button></div>`).join(''):'<p style="text-align:center;color:#999;padding:40px">No applications yet</p>';
+}
+function addApp(title,role){apps.push({title,role});render()}
+window.rm=i=>{apps.splice(i,1);render()};
+$('cartBtn').onclick=()=>$('drawer').classList.add('open');
+$('closeBtn').onclick=()=>$('drawer').classList.remove('open');
+$('submit').onclick=()=>{alert(`✅ ${apps.length} application(s) submitted. Thank you for applying!`);apps=[];render();$('drawer').classList.remove('open')};
+render();
+</script>
+</body>
+</html>

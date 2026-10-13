@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Our Workers | Falcare Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6428B3;--light:#C3A3E4;--soft:#CBA5ED;--dark:#2E1A40;--accent:#8A67A9}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;color:var(--dark);background:linear-gradient(180deg,#efe6fa 0,#f8f4fd 40%,#efe6fa 100%);min-height:100vh;overflow-x:hidden}
+.floating-logo{position:fixed;top:14px;left:30px;z-index:10000}
+.floating-logo img{height:110px;width:auto;display:block}
+.floating-navbar{position:fixed;top:28px;left:50%;transform:translateX(-50%);width:min(620px,68%);padding:8px 18px;display:flex;align-items:center;justify-content:center;gap:25px;z-index:9999;background:rgba(46,26,64,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.2);border-radius:50px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.nav-links{display:flex;gap:25px;align-items:center}
+.nav-links a{text-decoration:none;color:#fff;font-weight:600;font-size:.95rem;transition:.3s;position:relative}
+.nav-links a:hover,.nav-links a.current{color:var(--soft)}
+.nav-btn{padding:12px 24px;background:var(--primary);color:#fff;text-decoration:none;border-radius:50px;font-weight:600;transition:.3s}
+.nav-btn:hover{background:var(--soft);color:var(--dark)}
+.menu-toggle{display:none;font-size:2rem;cursor:pointer;color:#fff}
+.menu-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:10000}.menu-overlay.active{display:block}
+header.intro{padding:170px 8% 40px;text-align:center}
+header.intro h1{font-size:clamp(2.8rem,7vw,5.5rem);font-weight:800;line-height:.95;letter-spacing:-.03em;color:var(--dark)}
+header.intro h1 span{color:var(--primary)}
+header.intro p{max-width:560px;margin:22px auto 0;font-size:1.15rem;line-height:1.7}
+.count{margin:34px 0 0;font-weight:600;color:var(--accent)}
+.grid{width:min(1250px,92%);margin:30px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.card{background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 22px 44px -26px rgba(46,26,64,.45);display:flex;flex-direction:column;animation:in .55s cubic-bezier(.2,.8,.2,1) backwards;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px));transition:transform .2s ease-out,box-shadow .35s;will-change:transform}
+.card:hover{--ty:-8px;box-shadow:0 30px 50px -24px rgba(100,40,179,.5)}
+@keyframes in{from{opacity:0;transform:perspective(900px) translateY(70px) rotateX(-20deg)}to{opacity:1;transform:perspective(900px)}}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+header.intro,main{position:relative;z-index:1}
+.photo{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--soft)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .6s}
+.card:hover .photo img{transform:scale(1.05)}
+.role{position:absolute;left:14px;top:14px;background:var(--primary);color:#fff;font-weight:600;font-size:.85rem;padding:7px 16px;border-radius:99px}
+.info{padding:22px 22px 24px}
+.info h3{font-size:1.5rem;color:var(--primary);margin-bottom:14px}
+dl{display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:1rem}
+dt{color:var(--accent);font-weight:500}
+dd{font-weight:600;text-align:right}
+.book{display:block;margin-top:20px;text-align:center;padding:13px;border-radius:50px;background:var(--dark);color:#fff;text-decoration:none;font-weight:600;transition:.3s}
+.book:hover{background:var(--primary)}
+.pager{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:56px auto 90px;padding:0 4%}
+.pager button{font:inherit;font-weight:600;min-width:48px;height:48px;padding:0 18px;border-radius:50px;border:2px solid transparent;background:#fff;color:var(--dark);cursor:pointer;transition:.25s;box-shadow:0 8px 20px -12px rgba(46,26,64,.5)}
+.pager button:hover:not(:disabled){background:var(--soft)}
+.pager button.on{background:var(--primary);color:#fff}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+.pager button:focus-visible,.book:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:991px){
+.floating-navbar{width:auto;left:auto;right:20px;top:20px;transform:none;padding:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border:none;box-shadow:none}
+.floating-logo{top:10px;left:16px;z-index:10001}.floating-logo img{height:76px}
+.menu-toggle{display:block;z-index:10002;padding:8px 12px;background:var(--dark);border-radius:12px;line-height:1}
+.nav-links{flex-direction:column;position:fixed;top:0;right:-100%;width:85%;max-width:340px;height:100vh;background:rgba(46,26,64,.98);padding:90px 35px 30px;gap:25px;align-items:flex-start;z-index:10001;transition:right .4s ease-in-out;overflow-y:auto}
+.nav-links.active{right:0}.nav-btn{display:none}
+header.intro{padding-top:130px}}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:14px}.info{padding:14px 14px 18px}.info h3{font-size:1.1rem}dl{font-size:.85rem;gap:6px 8px}.role{font-size:.7rem;padding:5px 11px;left:8px;top:8px}.book{padding:10px;font-size:.9rem}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.card{animation:none}}
+</style></head><body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="floating-logo"><a href="index.html"><img src="assets/mum%20logo-08.svg" alt="Falcare Logo"></a></div>
+<header class="floating-navbar">
+<nav class="nav-links"><a href="index.html">Home</a><a href="About.html">About</a><a href="workers.html" class="current">Workers</a><a href="Jobs.html">Available Jobs</a></nav>
+<a href="contact.html" class="nav-btn">Book Now</a>
+<div class="menu-toggle" aria-label="Open menu">☰</div>
+</header>
+<header class="intro">
+<h1>Meet our <span>workers</span></h1>
+<p>Vetted, trained and ready to join your home. Browse our nannies, house helps and caregivers.</p>
+<p class="count" id="count"></p>
+</header>
+<main><div class="grid" id="grid" aria-live="polite"></div>
+<nav class="pager" id="pager" aria-label="Workers pages"></nav></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+var PHOTO="assets/worker.webp";
+/* Sample data: replace with your real workers (add a "photo" per worker if you have one) */
+var WORKERS=[
+["Grace Wanjiru",26,"Kikuyu",165,"Nanny"],["Faith Achieng",29,"Luo",168,"House help"],["Mercy Chebet",24,"Kalenjin",170,"Caregiver"],["Esther Mutheu",31,"Kamba",162,"Nanny"],
+["Lucy Nafula",27,"Luhya",166,"House help"],["Joy Kemunto",23,"Kisii",160,"Nanny"],["Purity Wambui",33,"Kikuyu",169,"Caregiver"],["Ruth Akinyi",28,"Luo",172,"House help"],
+["Naomi Jeptoo",25,"Kalenjin",167,"Nanny"],["Agnes Mwende",35,"Kamba",163,"Caregiver"],["Beatrice Naliaka",30,"Luhya",165,"House help"],["Sharon Moraa",22,"Kisii",164,"Nanny"],
+["Caroline Wangari",32,"Kikuyu",171,"House help"],["Dorcas Atieno",27,"Luo",168,"Caregiver"],["Hellen Jelagat",29,"Kalenjin",166,"Nanny"],["Janet Ndanu",34,"Kamba",161,"House help"],
+["Rose Nekesa",26,"Luhya",170,"Nanny"],["Winnie Nyaboke",24,"Kisii",167,"Caregiver"],["Judy Njeri",28,"Kikuyu",164,"House help"],["Millicent Adhiambo",31,"Luo",173,"Nanny"],
+["Cynthia Chepkoech",25,"Kalenjin",169,"House help"],["Sylvia Kavata",36,"Kamba",162,"Caregiver"],["Eunice Wekesa",27,"Luhya",165,"Nanny"],["Monica Bosibori",30,"Kisii",168,"House help"]
+].map(function(w){return{name:w[0],age:w[1],tribe:w[2],height:w[3],role:w[4]}});
+var PER=8,page=1,pages=Math.ceil(WORKERS.length/PER),grid=document.getElementById('grid'),pager=document.getElementById('pager'),count=document.getElementById('count');
+function cm2ft(c){var i=Math.round(c/2.54);return Math.floor(i/12)+"'"+(i%12)+'"'}
+function card(w,i){return '<article class="card" style="animation-delay:'+i*70+'ms"><div class="photo"><img src="'+(w.photo||PHOTO)+'" alt="'+w.name+'" loading="lazy"><span class="role">'+w.role+'</span></div><div class="info"><h3>'+w.name+'</h3><dl><dt>Age</dt><dd>'+w.age+' years</dd><dt>Tribe</dt><dd>'+w.tribe+'</dd><dt>Height</dt><dd>'+w.height+' cm ('+cm2ft(w.height)+')</dd></dl><a class="book" href="contact.html">Book '+w.name.split(' ')[0]+'</a></div></article>'}
+function btn(label,p,dis,on,aria){return '<button '+(dis?'disabled ':'')+(on?'class="on" aria-current="page" ':'')+'data-p="'+p+'" aria-label="'+(aria||'Page '+label)+'">'+label+'</button>'}
+function render(scroll){
+ var s=(page-1)*PER,list=WORKERS.slice(s,s+PER);
+ grid.innerHTML=list.map(card).join('');
+ count.textContent='Showing '+(s+1)+'–'+(s+list.length)+' of '+WORKERS.length+' workers';
+ var h=btn('Previous',page-1,page===1,false,'Previous page');
+ for(var p=1;p<=pages;p++)h+=btn(p,p,false,p===page);
+ h+=btn('Next',page+1,page===pages,false,'Next page');
+ pager.innerHTML=h;
+ if(scroll&&window.pulse)pulse();
+ if(scroll)document.getElementById('count').scrollIntoView({behavior:'smooth',block:'start'});
+}
+pager.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.disabled)return;page=+b.dataset.p;render(true)});
+render(false);
+/* ---- Three.js 3D scroll scene ---- */
+(function(){
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var cv=document.getElementById('gl'),R;
+try{R=new THREE.WebGLRenderer({canvas:cv,alpha:true,antialias:true})}catch(e){cv.style.display='none';return}
+R.setPixelRatio(Math.min(devicePixelRatio||1,2));
+var S=new THREE.Scene();S.fog=new THREE.Fog(0xf1e9fb,14,80);
+var C=new THREE.PerspectiveCamera(55,1,.1,200);S.add(C);
+S.add(new THREE.AmbientLight(0xffffff,.8));
+var dl=new THREE.DirectionalLight(0xffffff,.9);dl.position.set(5,8,6);S.add(dl);
+var pl=new THREE.PointLight(0x9b5cf0,1.3,60);C.add(pl);
+var G=[new THREE.IcosahedronGeometry(1,0),new THREE.TorusGeometry(1,.38,16,40),new THREE.SphereGeometry(1,32,24),new THREE.OctahedronGeometry(1,0),new THREE.TorusKnotGeometry(.8,.26,90,12)];
+var M=[0x6428b3,0xc3a3e4,0xcba5ed,0x8a67a9,0x2e1a40,0xffffff].map(function(c){return new THREE.MeshStandardMaterial({color:c,roughness:.35,metalness:.15})});
+var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+var N=64,items=[];
+for(var i=0;i<N;i++){
+ var m=new THREE.Mesh(G[Math.floor(rnd()*G.length)],M[Math.floor(rnd()*M.length)]);
+ var side=rnd()<.5?-1:1,o={m:m,bx:side*(3.2+rnd()*11),by:(rnd()-.5)*15,ph:rnd()*6.28,rx:(rnd()-.5)*.012,ry:(rnd()-.5)*.012};
+ m.position.z=8-i/N*135;m.scale.setScalar(.5+rnd()*1.5);
+ m.rotation.set(rnd()*6,rnd()*6,rnd()*6);items.push(o);S.add(m);
+}
+items[0].m.geometry=G[4];items[0].m.scale.setScalar(1.8);items[0].bx=6;items[0].by=1.5;items[0].m.position.z=-5;
+var sx=1;
+function size(){R.setSize(innerWidth,innerHeight,false);C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();sx=Math.min(1,C.aspect*1.1)}
+addEventListener('resize',size);size();
+var mx=0,my=0,sp=0,vel=0,boost=0;
+addEventListener('pointermove',function(e){if(e.pointerType==='touch'||reduce)return;mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1});
+window.pulse=function(){boost=1};
+function loop(t){
+ var h=document.documentElement.scrollHeight-innerHeight,tp=h>0?Math.min(1,Math.max(0,scrollY/h)):0,prev=sp;
+ sp+=(tp-sp)*(reduce?1:.07);vel+=((sp-prev)*60-vel)*.1;boost*=.95;
+ C.position.z=-sp*95;
+ C.position.x+=(mx*1.3-C.position.x)*.05;C.position.y+=(-my*.9-C.position.y)*.05;
+ C.rotation.z=Math.sin(sp*6.28)*.12;
+ var spin=reduce?0:.4+Math.abs(vel)*45+boost*10;
+ for(var i=0;i<N;i++){var o=items[i];
+  o.m.position.x=o.bx*sx;o.m.position.y=o.by+(reduce?0:Math.sin(t*.0006+o.ph)*.5);
+  o.m.rotation.x+=o.rx*spin;o.m.rotation.y+=o.ry*spin}
+ R.render(S,C);requestAnimationFrame(loop)}
+requestAnimationFrame(loop);
+})();
+/* ---- 3D card tilt ---- */
+(function(){
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var hot=null;
+function reset(c){if(c){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')}}
+grid.addEventListener('pointermove',function(e){
+ if(e.pointerType==='touch')return;
+ var c=e.target.closest('.card');if(c!==hot){reset(hot);hot=c}
+ if(!c)return;var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+ c.style.setProperty('--ry',(x*14)+'deg');c.style.setProperty('--rx',(-y*14)+'deg')});
+grid.addEventListener('pointerleave',function(){reset(hot);hot=null});
+})();
+/* mobile menu */
+var mt=document.querySelector('.menu-toggle'),nl=document.querySelector('.nav-links'),ov=document.createElement('div');ov.className='menu-overlay';document.body.appendChild(ov);
+function om(){nl.classList.add('active');ov.classList.add('active');document.body.style.overflow='hidden'}
+function cm(){nl.classList.remove('active');ov.classList.remove('active');document.body.style.overflow=''}
+mt.addEventListener('click',function(e){e.stopPropagation();nl.classList.contains('active')?cm():om()});
+ov.addEventListener('click',cm);document.querySelectorAll('.nav-links a').forEach(function(a){a.addEventListener('click',cm)});
+addEventListener('keydown',function(e){if(e.key==='Escape')cm()});addEventListener('resize',function(){if(innerWidth>991)cm()});
+</script></body></html>

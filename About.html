@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About Falcare | Trusted House Helps & Nanny Agency</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- BOOTSTRAP CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- BOOTSTRAP ICONS (Optional) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="">
+
+<style>
+/* ===== IMAGE PATHS - CHANGE THESE TO YOUR OWN IMAGES ===== */
+:root {
+  --slide-image-1: url('assets/lady.jpg');
+  --slide-image-2: url('assets/lady.jpg');
+  --slide-image-3: url('assets/lady.jpg');
+  --slide-image-4: url('assets/lady.jpg');
+  --slide-image-5: url('assets/lady.jpg');
+  --slide-image-6: url('assets/lady.jpg');
+  --slide-image-7: url('assets/lady.jpg');
+}
+
+/* ===== SLIDESHOW STYLES ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #1e1e22;
+  overflow: hidden;
+  height: 100%;
+}
+
+#wrapper {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-absolute {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center;
+  background-size: cover;
+}
+
+.slideshow {
+  position: relative;
+  color: #ffffff;
+  background-color: #1e1e22;
+  overflow: hidden;
+  height: 100vh;
+  min-height: 400px;
+}
+
+.slideshow__slide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  transition: visibility 0s 1.7s;
+}
+
+.slideshow__slide.is-current {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.slideshow__slide-background-load-wrap {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, 100%, 0);
+  overflow: hidden;
+}
+
+.is-loaded .slideshow__slide-background-load-wrap {
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0s;
+}
+
+.slideshow__slide.is-prev .slideshow__slide-background-parallax,
+.slideshow__slide.is-next .slideshow__slide-background-parallax {
+  transform: none !important;
+}
+
+.slideshow__slide-background-load {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, -50%, 0);
+}
+
+.is-loaded .slideshow__slide-background-load {
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide-background-wrap {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide.is-prev .slideshow__slide-background-wrap {
+  transform: translate3d(0, -100%, 0);
+}
+
+.slideshow__slide.is-next .slideshow__slide-background-wrap {
+  transform: translate3d(0, 100%, 0);
+}
+
+.slideshow__slide-background {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.5s;
+  transform: scale(1);
+  overflow: hidden;
+}
+
+.slideshow__slide.is-prev .slideshow__slide-background,
+.slideshow__slide.is-next .slideshow__slide-background {
+  transform: scale(0.5);
+  transition-delay: 0s;
+}
+
+.slideshow__slide-image-wrap {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide.is-prev .slideshow__slide-image-wrap {
+  transform: translate3d(0, 50%, 0);
+}
+
+.slideshow__slide-image {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.5s;
+  transform: scale(1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-position: center;
+  background-size: cover;
+}
+
+.slideshow__slide.is-prev .slideshow__slide-image,
+.slideshow__slide.is-next .slideshow__slide-image {
+  transform: scale(1.25);
+  transition-delay: 0s;
+}
+
+.slideshow__slide-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #1e1e22;
+  opacity: 0.35;
+}
+
+.slideshow__slide-image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to bottom, transparent 0%, #1e1e22 100%);
+  opacity: 0.35;
+}
+
+.slideshow__slide-caption-text {
+  position: relative;
+  height: 100%;
+  padding-top: 18vh;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (min-width: 768px) {
+  .slideshow__slide-caption-text {
+    padding-top: 20vh;
+  }
+}
+
+@media (min-width: 992px) {
+  .slideshow__slide-caption-text {
+    padding-top: 25vh;
+  }
+}
+
+.slideshow__slide.is-prev .slideshow__slide-caption-text {
+  transform: translate3d(0, -100%, 0);
+}
+
+.slideshow__slide.is-next .slideshow__slide-caption-text {
+  transform: translate3d(0, 100%, 0);
+}
+
+.slideshow__slide-caption {
+  position: relative;
+  height: 100%;
+  transform: translate3d(0, 100%, 0);
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+.is-loaded .slideshow__slide-caption {
+  transform: translate3d(0, 0, 0);
+}
+
+.slideshow__slide-caption-title {
+  line-height: 1.1;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+@media (min-width: 576px) {
+  .slideshow__slide-caption-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .slideshow__slide-caption-title {
+    font-size: 4.5rem;
+    margin-bottom: 1.2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .slideshow__slide-caption-title {
+    font-size: 5.625rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.slideshow__slide-caption-subtitle {
+  display: inline-block;
+  padding: 1.25rem 0;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+
+.slideshow__slide-caption-subtitle-label {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  display: inline-block;
+}
+
+.slideshow__slide-caption-subtitle:hover .slideshow__slide-caption-subtitle-label {
+  transform: translateX(20px);
+}
+
+.slideshow__slide-caption-subtitle::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  border-bottom: 1px solid #fff;
+  width: 1.5rem;
+  margin-right: 1.125rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center left;
+}
+
+.slideshow__slide-caption-subtitle.-load {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+  transform: translate3d(0, 3.75rem, 0);
+}
+
+.is-loaded .slideshow__slide-caption-subtitle.-load {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Container */
+.container {
+  position: relative;
+  margin: 0 auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  max-width: 1400px;
+}
+
+@media (min-width: 576px) {
+  .container {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding-right: 80px;
+    padding-left: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+}
+
+/* Controls - MOVED TO BOTTOM RIGHT */
+.c-header-home_footer {
+  z-index: 3;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.o-container {
+  position: relative;
+  margin: 0 auto;
+  padding-right: 20px;
+  padding-left: 20px;
+  max-width: 1400px;
+}
+
+@media (min-width: 576px) {
+  .o-container {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
+@media (min-width: 768px) {
+  .o-container {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  .o-container {
+    padding-right: 80px;
+    padding-left: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .o-container {
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+}
+
+.c-header-home_controls {
+  margin-left: 0;
+  letter-spacing: normal;
+  font-size: 0;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3d(0, 100%, 0);
+  padding-bottom: 30px;
+  /* Move to right side */
+  float: right;
+}
+
+@media (min-width: 576px) {
+  .c-header-home_controls {
+    padding-bottom: 35px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c-header-home_controls {
+    padding-bottom: 45px;
+  }
+}
+
+@media (min-width: 992px) {
+  .c-header-home_controls {
+    padding-bottom: 55px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .c-header-home_controls {
+    padding-bottom: 65px;
+  }
+}
+
+.is-loaded .c-header-home_controls {
+  transform: translate3d(0, 0, 0);
+}
+
+.c-header-home_controls {
+  transition-delay: 0.65s;
+}
+
+.o-button-group {
+  margin-left: 0;
+  letter-spacing: normal;
+  font-size: 0;
+  display: flex;
+  gap: 0;
+}
+
+.o-button {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid #ffffff;
+  white-space: nowrap;
+  font-size: 0;
+  cursor: pointer;
+  background: none;
+  color: inherit;
+  vertical-align: middle;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.075s;
+  height: 44px;
+  padding: 0 14px;
+  outline: 0;
+  border-radius: 0;
+}
+
+@media (min-width: 576px) {
+  .o-button {
+    height: 48px;
+    padding: 0 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .o-button {
+    height: 55px;
+    padding: 0 20px;
+  }
+}
+
+@media (min-width: 992px) {
+  .o-button {
+    height: 60px;
+    padding: 0 30px;
+  }
+}
+
+.o-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #ffffff;
+  transform: scaleX(0);
+  transform-origin: center left;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.075s;
+}
+
+.o-button:hover::after {
+  transform: scaleX(1);
+  transition-delay: 0s;
+}
+
+.o-button:hover {
+  color: #000000;
+  transition-delay: 0s;
+}
+
+.o-button.-square {
+  padding: 0;
+  width: 44px;
+}
+
+@media (min-width: 576px) {
+  .o-button.-square {
+    width: 48px;
+  }
+}
+
+@media (min-width: 768px) {
+  .o-button.-square {
+    width: 55px;
+  }
+}
+
+@media (min-width: 992px) {
+  .o-button.-square {
+    width: 60px;
+  }
+}
+
+.o-button-group .o-button + .o-button {
+  border-left: none;
+}
+
+.o-button_icon {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  fill: #ffffff;
+  transition: fill 0.45s cubic-bezier(0.4, 0, 0.2, 1) 0.075s;
+}
+
+@media (min-width: 768px) {
+  .o-button_icon {
+    width: 1.1875rem;
+    height: 1.1875rem;
+  }
+}
+
+.o-button:hover .o-button_icon {
+  fill: #1e1e22;
+  transition-delay: 0s;
+}
+
+.o-button_label {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+}
+
+/* Pagination - MOVED TO BOTTOM CENTER */
+.pagination {
+  position: absolute !important;
+  width: 100%;
+  text-align: center;
+  right: 0;
+  padding: 0 !important;
+  bottom: 75px;
+  z-index: 999;
+}
+
+@media (min-width: 576px) {
+  .pagination {
+    bottom: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .pagination {
+    bottom: 95px;
+  }
+}
+
+@media (min-width: 992px) {
+  .pagination {
+    bottom: 110px;
+  }
+}
+
+.pagination .container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (min-width: 768px) {
+  .pagination .container {
+    gap: 10px;
+  }
+}
+
+.pagination__item {
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #fff;
+  margin: 0 3px;
+  transition: 0.2s ease-in-out;
+  border-radius: 50%;
+}
+
+@media (min-width: 576px) {
+  .pagination__item {
+    width: 9px;
+    height: 9px;
+    margin: 0 4px;
+  }
+}
+
+@media (min-width: 768px) {
+  .pagination__item {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+  }
+}
+
+.pagination__item.is-current,
+.pagination__item:hover {
+  background-color: #fff;
+}
+
+/* Falcare custom content */
+.slide-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  padding: 0.25rem 0.8rem;
+  border-radius: 30px;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+@media (min-width: 576px) {
+  .slide-tag {
+    padding: 0.3rem 1rem;
+    font-size: 0.65rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .slide-tag {
+    padding: 0.4rem 1.2rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .slide-tag {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.slide-description {
+  font-size: 0.9rem;
+  max-width: 520px;
+  line-height: 1.5;
+  opacity: 0.8;
+  margin-bottom: 1.2rem;
+}
+
+@media (min-width: 576px) {
+  .slide-description {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .slide-description {
+    font-size: 1.05rem;
+    margin-bottom: 1.8rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .slide-description {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* BUTTONS - FULLY RESPONSIVE */
+.slide-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (min-width: 576px) {
+  .slide-buttons {
+    gap: 0.7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .slide-buttons {
+    gap: 0.8rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .slide-buttons {
+    gap: 1rem;
+  }
+}
+
+.falcare-btn {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background: #ffffff;
+  color: #1e1e22;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 40px;
+  font-size: 0.7rem;
+  transition: all 0.3s ease;
+  border: 1px solid #ffffff;
+  text-align: center;
+  min-width: 100px;
+  white-space: nowrap;
+}
+
+@media (min-width: 400px) {
+  .falcare-btn {
+    padding: 0.55rem 1.4rem;
+    font-size: 0.75rem;
+    min-width: 110px;
+  }
+}
+
+@media (min-width: 576px) {
+  .falcare-btn {
+    padding: 0.65rem 1.6rem;
+    font-size: 0.8rem;
+    min-width: 120px;
+  }
+}
+
+@media (min-width: 768px) {
+  .falcare-btn {
+    padding: 0.75rem 1.8rem;
+    font-size: 0.85rem;
+    min-width: 140px;
+  }
+}
+
+@media (min-width: 992px) {
+  .falcare-btn {
+    padding: 0.85rem 2rem;
+    font-size: 0.9rem;
+    min-width: 160px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .falcare-btn {
+    padding: 0.9rem 2.2rem;
+    font-size: 0.95rem;
+    min-width: 180px;
+  }
+}
+
+.falcare-btn:hover {
+  background: transparent;
+  color: #ffffff;
+}
+
+.falcare-btn.outline {
+  background: transparent;
+  color: #ffffff;
+}
+
+.falcare-btn.outline:hover {
+  background: #ffffff;
+  color: #1e1e22;
+}
+
+/* Stats & Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  max-width: 600px;
+  margin-top: 1.2rem;
+}
+
+@media (min-width: 576px) {
+  .stats-grid {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+}
+
+@media (min-width: 600px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    gap: 1.5rem;
+  }
+}
+
+.stat-card {
+  text-align: center;
+  padding: 0.8rem;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+@media (min-width: 576px) {
+  .stat-card {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stat-card {
+    padding: 1.2rem;
+  }
+}
+
+.stat-card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (min-width: 576px) {
+  .stat-card h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stat-card h2 {
+    font-size: 2.2rem;
+  }
+}
+
+.stat-card span {
+  font-size: 0.6rem;
+  opacity: 0.7;
+}
+
+@media (min-width: 576px) {
+  .stat-card span {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stat-card span {
+    font-size: 0.8rem;
+  }
+}
+
+.center-content {
+  text-align: center;
+}
+
+.center-content .slide-description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.story-card {
+  max-width: 600px;
+  padding: 1.2rem;
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (min-width: 576px) {
+  .story-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .story-card {
+    padding: 2rem;
+  }
+}
+
+.story-card p {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin-bottom: 0.6rem;
+}
+
+@media (min-width: 576px) {
+  .story-card p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .story-card p {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+.story-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+  max-width: 500px;
+  margin-top: 1.2rem;
+}
+
+@media (min-width: 400px) {
+  .values-grid {
+    gap: 0.8rem;
+  }
+}
+
+@media (min-width: 500px) {
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .values-grid {
+    margin-top: 1.5rem;
+  }
+}
+
+.value-card {
+  padding: 0.8rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+@media (min-width: 576px) {
+  .value-card {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .value-card {
+    padding: 1.2rem;
+  }
+}
+
+.value-card h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+@media (min-width: 576px) {
+  .value-card h3 {
+    font-size: 0.85rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .value-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+}
+
+.value-card p {
+  font-size: 0.6rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+@media (min-width: 576px) {
+  .value-card p {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .value-card p {
+    font-size: 0.8rem;
+  }
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  max-width: 480px;
+  margin-top: 1.2rem;
+}
+
+@media (min-width: 500px) {
+  .team-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-grid {
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.team-card {
+  text-align: center;
+  padding: 0.8rem 0.5rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px;
+}
+
+@media (min-width: 576px) {
+  .team-card {
+    padding: 1rem 0.6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-card {
+    padding: 1.2rem 0.8rem;
+  }
+}
+
+.team-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  margin: 0 auto 0.4rem;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+@media (min-width: 576px) {
+  .team-avatar {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-avatar {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.6rem;
+  }
+}
+
+.team-card h3 {
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+@media (min-width: 576px) {
+  .team-card h3 {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-card h3 {
+    font-size: 0.9rem;
+  }
+}
+
+.team-card span {
+  font-size: 0.6rem;
+  opacity: 0.6;
+}
+
+@media (min-width: 576px) {
+  .team-card span {
+    font-size: 0.65rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .team-card span {
+    font-size: 0.7rem;
+  }
+}
+
+.credibility-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  max-width: 500px;
+  margin-top: 1.2rem;
+}
+
+@media (min-width: 500px) {
+  .credibility-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .credibility-grid {
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+}
+
+.credibility-card {
+  text-align: center;
+  padding: 0.7rem;
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+
+@media (min-width: 576px) {
+  .credibility-card {
+    padding: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .credibility-card {
+    padding: 1rem;
+  }
+}
+
+.credibility-card h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (min-width: 576px) {
+  .credibility-card h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .credibility-card h2 {
+    font-size: 2rem;
+  }
+}
+
+.credibility-card span {
+  font-size: 0.6rem;
+  opacity: 0.7;
+}
+
+@media (min-width: 576px) {
+  .credibility-card span {
+    font-size: 0.65rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .credibility-card span {
+    font-size: 0.75rem;
+  }
+}
+
+/* ===== SITE HEADER WITH LOGO ===== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 12px 0;
+  background: transparent;
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+@media (min-width: 576px) {
+  .site-header {
+    padding: 15px 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .site-header {
+    padding: 18px 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .site-header {
+    padding: 20px 0;
+  }
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  pointer-events: auto;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+  transition: opacity 0.3s ease;
+}
+
+.site-logo:hover {
+  opacity: 0.8;
+}
+
+.site-logo svg {
+  height: 200px;
+  width: auto;
+  display: block;
+}
+
+.site-logo-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-left: 10px;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 576px) {
+  .site-header {
+    padding: 8px 0;
+  }
+  .site-logo svg {
+    height: 100px;
+  }
+  .site-logo-text {
+    font-size: 0.9rem;
+    margin-left: 6px;
+  }
+}
+
+@media (max-width: 400px) {
+  .site-header {
+    padding: 6px 0;
+  }
+  .site-logo svg {
+    height: 50px;
+  }
+  .site-logo-text {
+    font-size: 0.8rem;
+    margin-left: 4px;
+  }
+}
+
+/* ===== NAVBAR ===== */
+.site-header {
+  background: linear-gradient(to bottom, rgba(30,30,34,0.75), rgba(30,30,34,0));
+}
+
+.site-header .container {
+  justify-content: space-between;
+}
+
+.site-logo img {
+  height: 200px;
+  width: auto;
+  display: block;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  position: relative;
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.3rem;
+  height: 1px;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: center left;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  opacity: 1;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+.nav-links a.nav-cta {
+  margin-left: 0.6rem;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid #ffffff;
+  border-radius: 40px;
+  opacity: 1;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a.nav-cta::after {
+  display: none;
+}
+
+.nav-links a.nav-cta:hover,
+.nav-links a.nav-cta.active {
+  background: #ffffff;
+  color: #1e1e22;
+}
+
+/* Hamburger button (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  position: relative;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1002;
+  backdrop-filter: blur(4px);
+}
+
+.nav-toggle span {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.2s ease, top 0.3s ease;
+}
+
+.nav-toggle span:nth-child(1) { top: 15px; }
+.nav-toggle span:nth-child(2) { top: 21px; }
+.nav-toggle span:nth-child(3) { top: 27px; }
+
+.nav-toggle.is-open span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+/* ===== MOBILE MENU ===== */
+@media (max-width: 860px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .site-logo img {
+    height: 44px;
+  }
+
+  .main-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    justify-content: center;
+    background: rgba(30,30,34,0.97);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0s 0.35s;
+  }
+
+  .main-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: center;
+  }
+
+  .nav-links a {
+    font-size: 1.4rem;
+    padding: 0.7rem 1.5rem;
+  }
+
+  .nav-links a::after {
+    left: 25%;
+    right: 25%;
+    bottom: 0.4rem;
+  }
+
+  .nav-links a.nav-cta {
+    margin: 0.8rem 0 0;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .site-logo img {
+    height: 100px;
+  }
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ===== SITE HEADER WITH LOGO - Links back to Homepage ===== -->
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="site-logo" aria-label="Falcare - Go to Homepage">
+      <img src="assets/mum logo-08.svg" alt="Falcare">
+    </a>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mainNav">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="About.html" class="active" aria-current="page">About</a></li>
+        <li><a href="workers.html">Workers</a></li>
+        <li><a href="jobs.html" class="nav-cta">Available Jobs</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div id="wrapper">
+
+<section class="slideshow" id="js-header">
+
+  <!-- ===================================== -->
+  <!-- SLIDE 1 - HERO -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide is-current" data-slide="1">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 1: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-1);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Trusted House Helps & Nannies</span>
+          <h1 class="slideshow__slide-caption-title">Creating Better Homes Through Trusted Care</h1>
+          <p class="slide-description">Falcare connects families with dependable, thoroughly vetted house helps, nannies, caregivers and domestic professionals.</p>
+          <div class="slide-buttons">
+            <a href="workers.html" class="falcare-btn">Browse Workers</a>
+            <a href="contact.html" class="falcare-btn outline">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 2 - SOCIAL PROOF -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide is-next" data-slide="2">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 2: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-2);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container center-content js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Trusted By Families</span>
+          <h1 class="slideshow__slide-caption-title">Results That Speak For Themselves</h1>
+          <div class="stats-grid">
+            <div class="stat-card"><h2>500+</h2><span>Families Served</span></div>
+            <div class="stat-card"><h2>98%</h2><span>Client Satisfaction</span></div>
+            <div class="stat-card"><h2>100%</h2><span>Verified Workers</span></div>
+            <div class="stat-card"><h2>24/7</h2><span>Support Available</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 3 - OUR STORY -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="3">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 3: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-3);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container story-container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <div class="story-card">
+            <span class="slide-tag">Our Story</span>
+            <h1 class="slideshow__slide-caption-title">Built On Trust</h1>
+            <p>Falcare was founded to simplify the process of finding dependable household support.</p>
+            <p>Through rigorous screening, professional standards and continuous support, we help families gain peace of mind while creating opportunities for skilled caregivers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 4 - VALUES -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="4">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 4: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-4);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Our Values</span>
+          <h1 class="slideshow__slide-caption-title">What Drives Everything We Do</h1>
+          <div class="values-grid">
+            <div class="value-card"><h3>Trust</h3><p>Carefully screened candidates.</p></div>
+            <div class="value-card"><h3>Safety</h3><p>Verification comes first.</p></div>
+            <div class="value-card"><h3>Care</h3><p>People always come first.</p></div>
+            <div class="value-card"><h3>Integrity</h3><p>Honest communication.</p></div>
+            <div class="value-card"><h3>Excellence</h3><p>Professional standards.</p></div>
+            <div class="value-card"><h3>Reliability</h3><p>Support you can trust.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 5 - TEAM -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="5">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 5: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-5);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Meet The Team</span>
+          <h1 class="slideshow__slide-caption-title">The People Behind Falcare</h1>
+          <div class="team-grid">
+            <div class="team-card"><div class="team-avatar"></div><h3>Sarah Mwangi</h3><span>Founder</span></div>
+            <div class="team-card"><div class="team-avatar"></div><h3>Kevin Otieno</h3><span>Recruitment Lead</span></div>
+            <div class="team-card"><div class="team-avatar"></div><h3>Grace Wanjiku</h3><span>Client Relations</span></div>
+            <div class="team-card"><div class="team-avatar"></div><h3>David Kimani</h3><span>Training Manager</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 6 - CREDIBILITY -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="6">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 6: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-6);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container center-content js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Proven Experience</span>
+          <h1 class="slideshow__slide-caption-title">Built On Real Results</h1>
+          <div class="credibility-grid">
+            <div class="credibility-card"><h2>10+</h2><span>Years Experience</span></div>
+            <div class="credibility-card"><h2>500+</h2><span>Placements</span></div>
+            <div class="credibility-card"><h2>98%</h2><span>Retention Rate</span></div>
+            <div class="credibility-card"><h2>24/7</h2><span>Support</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================== -->
+  <!-- SLIDE 7 - CTA -->
+  <!-- ===================================== -->
+  <div class="slideshow__slide js-slider-home-slide" data-slide="7">
+    <div class="slideshow__slide-background-parallax background-absolute js-parallax" data-speed="-1" data-position="top" data-target="#js-header">
+      <div class="slideshow__slide-background-load-wrap background-absolute">
+        <div class="slideshow__slide-background-load background-absolute">
+          <div class="slideshow__slide-background-wrap background-absolute">
+            <div class="slideshow__slide-background background-absolute">
+              <div class="slideshow__slide-image-wrap background-absolute">
+                <!-- IMAGE 7: Change the background-image URL below -->
+                <div class="slideshow__slide-image background-absolute" style="background-image: var(--slide-image-7);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slideshow__slide-caption">
+      <div class="slideshow__slide-caption-text">
+        <div class="container center-content js-parallax" data-speed="2" data-position="top" data-target="#js-header">
+          <span class="slide-tag">Get Started</span>
+          <h1 class="slideshow__slide-caption-title">Ready To Find Trusted Household Support?</h1>
+          <p class="slide-description">Whether you need a nanny, caregiver, house help or domestic worker, Falcare is ready to help.</p>
+          <div class="slide-buttons">
+            <a href="contact.html" class="falcare-btn">Request Consultation</a>
+            <a href="workers.html" class="falcare-btn outline">View Workers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS - NOW ON THE RIGHT SIDE -->
+  <div class="c-header-home_footer">
+    <div class="o-container">
+      <div class="c-header-home_controls -nomobile o-button-group">
+        <div class="js-parallax" data-speed="1" data-position="top" data-target="#js-header">
+          <button class="o-button -white -square -left js-slider-home-button js-slider-home-prev" type="button">
+            <span class="o-button_label">
+              <svg class="o-button_icon" role="img"><use xlink:href="#arrow-prev"></use></svg>
+            </span>
+          </button>
+          <button class="o-button -white -square js-slider-home-button js-slider-home-next" type="button">
+            <span class="o-button_label">
+              <svg class="o-button_icon" role="img"><use xlink:href="#arrow-next"></use></svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</div>
+
+<!-- SVG ICONS -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol viewBox="0 0 18 18" id="arrow-next">
+    <path d="M12.6,9L4,17.3L4.7,18l8.5-8.3l0,0L14,9l0,0l-0.7-0.7l0,0L4.7,0L4,0.7L12.6,9z"/>
+  </symbol>
+  <symbol viewBox="0 0 18 18" id="arrow-prev">
+    <path d="M14,0.7L13.3,0L4.7,8.3l0,0L4,9l0,0l0.7,0.7l0,0l8.5,8.3l0.7-0.7L5.4,9L14,0.7z"/>
+  </symbol>
+</svg>
+<!-- BOOTSTRAP JS BUNDLE -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+(function($) {
+  'use strict';
+
+  const $window = $(window);
+  const $body = $('body');
+
+  class Slideshow {
+    constructor(userOptions = {}) {
+      const defaultOptions = {
+        $el: $('.slideshow'),
+        showArrows: false,
+        showPagination: true,
+        duration: 8000,
+        autoplay: true
+      };
+
+      let options = Object.assign({}, defaultOptions, userOptions);
+
+      this.$el = options.$el;
+      this.maxSlide = this.$el.find('.js-slider-home-slide').length;
+      this.showArrows = this.maxSlide > 1 ? options.showArrows : false;
+      this.showPagination = options.showPagination;
+      this.currentSlide = 1;
+      this.isAnimating = false;
+      this.animationDuration = 1200;
+      this.autoplaySpeed = options.duration;
+      this.interval;
+      this.$controls = this.$el.find('.js-slider-home-button');
+      this.autoplay = this.maxSlide > 1 ? options.autoplay : false;
+
+      this.$el.on('click', '.js-slider-home-next', (event) => this.nextSlide());
+      this.$el.on('click', '.js-slider-home-prev', (event) => this.prevSlide());
+      this.$el.on('click', '.js-pagination-item', event => {
+        if (!this.isAnimating) {
+          this.preventClick();
+          this.goToSlide(parseInt(event.target.dataset.slide));
+        }
+      });
+
+      this.init();
+    }
+
+    init() {
+      this.goToSlide(1);
+      if (this.autoplay) {
+        this.startAutoplay();
+      }
+
+      if (this.showPagination) {
+        let paginationNumber = this.maxSlide;
+        let pagination = '<div class="pagination"><div class="container">';
+
+        for (let i = 0; i < this.maxSlide; i++) {
+          let item = `<span class="pagination__item js-pagination-item ${i === 0 ? 'is-current' : ''}" data-slide="${i + 1}">${i + 1}</span>`;
+          pagination = pagination + item;
+        }
+
+        pagination = pagination + '</div></div>';
+
+        this.$el.append(pagination);
+      }
+    }
+
+    preventClick() {
+      this.isAnimating = true;
+      this.$controls.prop('disabled', true);
+      clearInterval(this.interval);
+
+      setTimeout(() => {
+        this.isAnimating = false;
+        this.$controls.prop('disabled', false);
+        if (this.autoplay) {
+          this.startAutoplay();
+        }
+      }, this.animationDuration);
+    }
+
+    goToSlide(index) {
+      this.currentSlide = parseInt(index);
+
+      if (this.currentSlide > this.maxSlide) {
+        this.currentSlide = 1;
+      }
+
+      if (this.currentSlide === 0) {
+        this.currentSlide = this.maxSlide;
+      }
+
+      const newCurrent = this.$el.find('.js-slider-home-slide[data-slide="' + this.currentSlide + '"]');
+      const newPrev = this.currentSlide === 1 ? this.$el.find('.js-slider-home-slide').last() : newCurrent.prev('.js-slider-home-slide');
+      const newNext = this.currentSlide === this.maxSlide ? this.$el.find('.js-slider-home-slide').first() : newCurrent.next('.js-slider-home-slide');
+
+      this.$el.find('.js-slider-home-slide').removeClass('is-prev is-next is-current');
+      this.$el.find('.js-pagination-item').removeClass('is-current');
+
+      if (this.maxSlide > 1) {
+        newPrev.addClass('is-prev');
+        newNext.addClass('is-next');
+      }
+
+      newCurrent.addClass('is-current');
+      this.$el.find('.js-pagination-item[data-slide="' + this.currentSlide + '"]').addClass('is-current');
+    }
+
+    nextSlide() {
+      this.preventClick();
+      this.goToSlide(this.currentSlide + 1);
+    }
+
+    prevSlide() {
+      this.preventClick();
+      this.goToSlide(this.currentSlide - 1);
+    }
+
+    startAutoplay() {
+      this.interval = setInterval(() => {
+        if (!this.isAnimating) {
+          this.nextSlide();
+        }
+      }, this.autoplaySpeed);
+    }
+
+    destroy() {
+      this.$el.off();
+    }
+  }
+
+  (function() {
+    let loaded = false;
+    let maxLoad = 3000;
+
+    function load() {
+      const options = {
+        showPagination: true,
+        duration: 8000,
+        autoplay: true
+      };
+      let slideShow = new Slideshow(options);
+    }
+
+    function addLoadClass() {
+      $body.addClass('is-loaded');
+
+      setTimeout(function() {
+        $body.addClass('is-animated');
+      }, 600);
+    }
+
+    $window.on('load', function() {
+      if (!loaded) {
+        loaded = true;
+        load();
+      }
+    });
+
+    setTimeout(function() {
+      if (!loaded) {
+        loaded = true;
+        load();
+      }
+    }, maxLoad);
+
+    addLoadClass();
+  })();
+
+})(jQuery);
+</script>
+
+<script>
+(function () {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+
+  function setMenu(open) {
+    toggle.classList.toggle('is-open', open);
+    nav.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  toggle.addEventListener('click', function () {
+    setMenu(!nav.classList.contains('is-open'));
+  });
+
+  nav.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { setMenu(false); });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setMenu(false);
+  });
+
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 860) setMenu(false);
+  });
+})();
+</script>
+
+</body>
+</html>
