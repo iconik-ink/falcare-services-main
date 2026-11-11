@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book &amp; Checkout | Falcare Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6428B3;--light:#C3A3E4;--soft:#CBA5ED;--dark:#2E1A40;--accent:#8A67A9;--line:#e6d9f3;--ok:#1f9d6b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;color:var(--dark);background:linear-gradient(180deg,#efe6fa,#f8f4fd 40%,#efe6fa);min-height:100vh;line-height:1.5}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+header{background:var(--dark);color:#fff}
+.nav{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav img{height:56px;display:block}
+.nav ul{display:flex;gap:1.4rem;list-style:none;font-weight:600;font-size:.95rem}
+.nav ul a:hover,.nav ul a.on{color:var(--soft)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.title{padding:2rem 0 1.2rem}
+.title h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.title h1 span{color:var(--primary)}
+.title p{color:var(--accent);margin-top:.4rem}
+.layout{display:grid;grid-template-columns:1fr 340px;gap:1.4rem;align-items:start;padding-bottom:3rem}
+.panel{background:#fff;border-radius:24px;box-shadow:0 22px 44px -26px rgba(46,26,64,.45)}
+.stepper{display:flex;gap:.5rem;padding:1rem 1.2rem;border-bottom:1px solid var(--line)}
+.stepper .s{flex:1;display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:600;color:#a592b8}
+.stepper b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--accent);flex:none;font-size:.8rem}
+.s.on{color:var(--dark)}.s.on b{background:var(--primary);color:#fff}.s.done b{background:var(--ok);color:#fff}
+.body{padding:1.4rem}
+.step{display:none}.step.show{display:block;animation:in .25s}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:1.6rem;font-weight:700;line-height:1.15}
+.sub{color:#6b5a7b;font-size:.92rem;margin:.2rem 0 1.1rem}
+/* selected workers */
+.sel-list{display:grid;gap:.7rem}
+.sw{display:flex;align-items:center;gap:.9rem;border:2px solid var(--line);border-radius:18px;padding:.6rem .8rem .6rem .6rem}
+.sw img{width:60px;height:72px;object-fit:cover;object-position:top;border-radius:12px;background:var(--soft);flex:none}
+.sw h3{font-size:1.05rem;color:var(--primary)}
+.sw small{color:#6b5a7b;display:block}
+.sw .tag{display:inline-block;background:#f1e8fa;border-radius:99px;padding:.1rem .6rem;font-size:.72rem;font-weight:600;margin-right:.3rem}
+.sw .rm{margin-left:auto;background:none;border:none;color:#b13b3b;font-weight:600;font-size:.85rem}
+.add{display:inline-block;margin-top:1rem;color:var(--primary);font-weight:600;text-decoration:underline}
+.empty{text-align:center;padding:2rem 1rem}
+.empty i{font-size:2.4rem}
+/* form */
+.f{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}.f .full{grid-column:1/-1}
+label.l{font-size:.82rem;font-weight:600;display:block;margin-bottom:.3rem}
+input,textarea{width:100%;padding:.75rem .95rem;border:1.5px solid var(--line);border-radius:14px;font:inherit;color:var(--dark);background:#fff}
+input:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(100,40,179,.15)}
+textarea{min-height:80px;resize:vertical}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pill{padding:.55rem 1rem;border:1.5px solid var(--line);border-radius:99px;background:#fff;font-weight:600;font-size:.88rem}
+.pill.sel{background:var(--primary);border-color:var(--primary);color:#fff}
+.err{color:#c0392b;font-size:.78rem;margin-top:.25rem;display:none}
+.bad input,.bad .pills{border-color:#c0392b}.bad .err{display:block}
+.actions{display:flex;justify-content:space-between;align-items:center;margin-top:1.4rem;padding-top:1.1rem;border-top:1px solid var(--line)}
+.btn{padding:.85rem 1.7rem;border-radius:99px;border:none;font-weight:700;font-size:1rem;display:inline-block}
+.btn.p{background:var(--primary);color:#fff;box-shadow:0 8px 18px -8px rgba(100,40,179,.6)}
+.btn.p:hover{background:var(--dark)}.btn.p:disabled{background:#cdbfdc;box-shadow:none;cursor:not-allowed}
+.btn.g{background:none;color:var(--dark);padding-left:.3rem}
+.btn.wa{background:#25D366;color:#fff}
+/* summary */
+.sum{position:sticky;top:14px;padding:1.2rem}
+.sum h4{font-size:1.2rem;margin-bottom:.5rem}
+.row{display:flex;justify-content:space-between;gap:.8rem;padding:.5rem 0;border-bottom:1px dashed var(--line);font-size:.88rem}
+.row span:first-child{color:#6b5a7b}.row span:last-child{font-weight:600;text-align:right}
+.row .dash{color:#b5a3c6;font-weight:400}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem;padding-top:.7rem}
+.help{margin-top:1rem;background:#f6effd;border-radius:14px;padding:.8rem;font-size:.84rem}.help a{color:var(--primary);font-weight:600}
+.review .row{font-size:.95rem}
+.done{text-align:center;padding:1rem .5rem}
+.ck{width:70px;height:70px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:2rem;margin:0 auto 1rem}
+.done .btn{margin:.3rem}
+@media(max-width:860px){.layout{grid-template-columns:1fr}.sum{position:static;order:-1}.nav ul{display:none}.stepper .s span{display:none}.stepper .s.on span{display:inline}}
+@media(max-width:520px){.f{grid-template-columns:1fr}.body{padding:1rem}.sw img{width:52px;height:62px}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+  <a href="Falcare.html"><img src="assets/mum%20logo-08.svg" alt="Falcare"></a>
+  <ul><li><a href="Falcare.html">Home</a></li><li><a href="About.html">About</a></li><li><a href="workers.html">Workers</a></li><li><a href="Jobs.html">Available Jobs</a></li><li><a href="booking.html" class="on">Book Now</a></li></ul>
+</div></header>
+
+<div class="wrap">
+  <div class="title"><h1>Book &amp; <span>checkout</span></h1><p>Review your selected workers, tell us when you need them, and confirm.</p></div>
+  <div class="layout">
+    <div class="panel">
+      <div class="stepper" id="stepper">
+        <div class="s on"><b>1</b><span>Your workers</span></div>
+        <div class="s"><b>2</b><span>Schedule</span></div>
+        <div class="s"><b>3</b><span>Your details</span></div>
+        <div class="s"><b>4</b><span>Confirm</span></div>
+      </div>
+      <div class="body">
+        <section class="step show" data-step="1">
+          <h2>Your selected workers</h2>
+          <p class="sub">These are the people you picked on our workers page.</p>
+          <div class="sel-list" id="list"></div>
+          <a class="add" href="workers.html">+ Add more workers</a>
+        </section>
+
+        <section class="step" data-step="2">
+          <h2>When and how?</h2>
+          <p class="sub">This helps us confirm availability.</p>
+          <div class="f">
+            <div class="full" id="gArr"><label class="l">Arrangement</label>
+              <div class="pills" data-key="arrangement"><button type="button" class="pill" data-v="Live-in">Live-in</button><button type="button" class="pill" data-v="Live-out">Live-out (daily)</button></div><div class="err">Choose one</div></div>
+            <div class="full" id="gDur"><label class="l">Duration</label>
+              <div class="pills" data-key="duration"><button type="button" class="pill" data-v="Full-time">Full-time</button><button type="button" class="pill" data-v="Part-time">Part-time</button><button type="button" class="pill" data-v="One-off">One-off</button></div><div class="err">Choose one</div></div>
+            <div id="gStart"><label class="l" for="start">Start date</label><input type="date" id="start"><div class="err">Choose a start date</div></div>
+            <div><label class="l" for="area">Your area</label><input id="area" placeholder="e.g. Kilimani, Karen, Ruaka"></div>
+            <div class="full"><label class="l" for="notes">Special requirements (optional)</label><textarea id="notes" placeholder="Children's ages, cooking, pets, languages…"></textarea></div>
+          </div>
+        </section>
+
+        <section class="step" data-step="3">
+          <h2>Your details</h2>
+          <p class="sub">How should we reach you to confirm?</p>
+          <div class="f">
+            <div class="full" id="gName"><label class="l" for="name">Full name</label><input id="name" autocomplete="name"><div class="err">Please enter your name</div></div>
+            <div id="gPhone"><label class="l" for="phone">Phone / WhatsApp</label><input id="phone" type="tel" placeholder="+254 7XX XXX XXX" autocomplete="tel"><div class="err">Enter a valid phone number</div></div>
+            <div><label class="l" for="email">Email (optional)</label><input id="email" type="email" autocomplete="email"></div>
+          </div>
+        </section>
+
+        <section class="step" data-step="4">
+          <h2>Review &amp; confirm</h2>
+          <p class="sub">Check everything, then send your booking to Falcare.</p>
+          <div class="review" id="review"></div>
+        </section>
+
+        <section class="step" data-step="5">
+          <div class="done">
+            <div class="ck">✓</div>
+            <h2>Booking ready to send</h2>
+            <p class="sub">Tap below to send it to us. We'll confirm availability and next steps shortly.</p>
+            <a class="btn wa" id="waBtn" target="_blank" rel="noopener">Send on WhatsApp</a>
+            <a class="btn p" id="mailBtn">Send by email</a>
+          </div>
+        </section>
+
+        <div class="actions" id="actions">
+          <button type="button" class="btn g" id="back" style="visibility:hidden">← Back</button>
+          <button type="button" class="btn p" id="next">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel sum">
+      <h4>Your booking</h4>
+      <div id="summary"></div>
+      <div class="help">Need help? Call <a href="tel:+254708312617">+254708312617</a><br>Mon–Fri · 08:00–19:00</div>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ===== SETTINGS ===== */
+var WHATSAPP="254708312617", EMAIL="Falcare@kenyan-maidens.com";
+/* Placement fee per worker in KES, by role. Leave at 0 to hide prices. */
+var FEES={"Dayburg":0,"Nanny":0,"Garden boy":0,"Caregiver":0};
+/* ==================== */
+var KEY='falcare_cart',cart=[];
+try{cart=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+var q=function(s){return document.querySelector(s)},qa=function(s){return[].slice.call(document.querySelectorAll(s))};
+var S={step:1,arrangement:null,duration:null};
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(cart))}catch(e){}}
+function fee(){return cart.reduce(function(t,w){return t+(FEES[w.role]||0)},0)}
+function kes(n){return 'KES '+n.toLocaleString('en-KE')}
+function fmtDate(){var v=q('#start').value;return v?new Date(v).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}):''}
+q('#start').min=new Date().toISOString().slice(0,10);
+
+function renderList(){
+ q('#list').innerHTML=cart.length?cart.map(function(w){
+  return '<div class="sw"><img src="'+esc(w.photo)+'" alt="'+esc(w.name)+'"><div><h3>'+esc(w.name)+'</h3><span class="tag">'+esc(w.role)+'</span><small>'+w.age+' yrs · '+esc(w.tribe)+'</small></div><button type="button" class="rm" data-id="'+esc(w.id)+'">Remove</button></div>'
+ }).join(''):'<div class="empty"><p style="font-size:1.1rem;font-weight:600">No workers selected yet</p><p class="sub">Browse our workers and tap Select on the ones you like.</p><a class="btn p" href="workers.html">Browse workers</a></div>';
+}
+q('#list').addEventListener('click',function(e){var b=e.target.closest('.rm');if(!b)return;cart=cart.filter(function(c){return c.id!==b.dataset.id});save();render()});
+qa('.pills').forEach(function(p){p.addEventListener('click',function(e){var b=e.target.closest('.pill');if(!b)return;S[p.dataset.key]=b.dataset.v;render()})});
+['start','area','notes','name','phone','email'].forEach(function(id){q('#'+id).addEventListener('input',render)});
+
+function valid(step,show){
+ function mark(g,ok){if(show)q(g).classList.toggle('bad',!ok);return ok}
+ if(step===1)return cart.length>0;
+ if(step===2){var a=mark('#gArr',!!S.arrangement),d=mark('#gDur',!!S.duration),s=mark('#gStart',!!q('#start').value);return a&&d&&s}
+ if(step===3){var n=mark('#gName',q('#name').value.trim().length>1),p=mark('#gPhone',q('#phone').value.replace(/\D/g,'').length>=9);return n&&p}
+ return true;
+}
+function rows(list){return list.map(function(r){return '<div class="row"><span>'+r[0]+'</span><span class="'+(r[1]?'':'dash')+'">'+(r[1]?esc(r[1]):'—')+'</span></div>'}).join('')}
+function render(){
+ qa('.step').forEach(function(s){s.classList.toggle('show',+s.dataset.step===S.step)});
+ qa('#stepper .s').forEach(function(el,i){el.classList.toggle('on',i+1===S.step);el.classList.toggle('done',i+1<S.step||S.step===5)});
+ qa('.pills').forEach(function(p){[].forEach.call(p.querySelectorAll('.pill'),function(b){b.classList.toggle('sel',S[p.dataset.key]===b.dataset.v)})});
+ renderList();
+ var base=[['Workers',cart.map(function(w){return w.name}).join(', ')],['Arrangement',S.arrangement],['Duration',S.duration],['Start',fmtDate()],['Area',q('#area').value.trim()]];
+ var total=fee(),tot=total>0?'<div class="total"><span>Total</span><span>'+kes(total)+'</span></div>':'';
+ q('#summary').innerHTML=rows(base)+tot;
+ q('#review').innerHTML=rows(base.concat([['Name',q('#name').value.trim()],['Phone',q('#phone').value.trim()],['Email',q('#email').value.trim()],['Notes',q('#notes').value.trim()]]))+tot;
+ q('#back').style.visibility=S.step>1&&S.step<5?'visible':'hidden';
+ q('#actions').style.display=S.step===5?'none':'flex';
+ q('#next').textContent=S.step===4?'Confirm booking':'Continue';
+ q('#next').disabled=(S.step===1&&!cart.length);
+}
+function go(n){S.step=n;render();window.scrollTo({top:0,behavior:'smooth'})}
+q('#back').onclick=function(){go(S.step-1)};
+q('#next').onclick=function(){if(!valid(S.step,true))return;S.step===4?finish():go(S.step+1)};
+
+function finish(){
+ var total=fee();
+ var lines=['Hello Falcare, I would like to book:',''].concat(cart.map(function(w,i){return (i+1)+'. '+w.name+' ('+w.role+')'}),['',
+  'Arrangement: '+S.arrangement+', '+S.duration,'Start date: '+fmtDate()]);
+ if(q('#area').value.trim())lines.push('Area: '+q('#area').value.trim());
+ if(q('#notes').value.trim())lines.push('Notes: '+q('#notes').value.trim());
+ if(total>0)lines.push('Total: '+kes(total));
+ lines.push('','Name: '+q('#name').value.trim(),'Phone: '+q('#phone').value.trim());
+ if(q('#email').value.trim())lines.push('Email: '+q('#email').value.trim());
+ var msg=lines.join('\n');
+ q('#waBtn').href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(msg);
+ q('#mailBtn').href='mailto:'+EMAIL+'?subject='+encodeURIComponent('Booking request: '+cart.length+' worker(s)')+'&body='+encodeURIComponent(msg);
+ q('#waBtn').onclick=q('#mailBtn').onclick=function(){cart=[];save()};
+ go(5);
+}
+render();
+</script>
+</body>
+</html>

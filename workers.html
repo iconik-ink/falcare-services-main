@@ -41,6 +41,33 @@ dt{color:var(--accent);font-weight:500}
 dd{font-weight:600;text-align:right}
 .book{display:block;margin-top:20px;text-align:center;padding:13px;border-radius:50px;background:var(--dark);color:#fff;text-decoration:none;font-weight:600;transition:.3s}
 .book:hover{background:var(--primary)}
+.pick{width:100%;border:2px solid var(--dark);cursor:pointer;font:inherit}
+.card.sel{outline:3px solid var(--primary);outline-offset:-3px}
+.card.sel .pick{background:var(--primary);border-color:var(--primary)}
+.cartbar{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translate(-50%,140%);z-index:9990;display:flex;align-items:center;gap:14px;background:var(--dark);color:#fff;padding:10px 12px 10px 22px;border-radius:50px;box-shadow:0 18px 40px rgba(46,26,64,.45);transition:transform .35s cubic-bezier(.2,.8,.2,1);max-width:94vw;white-space:nowrap}
+.cartbar.show{transform:translate(-50%,0)}
+.cartbar .n{font-weight:600}
+.cartbar #clr{background:none;border:none;color:var(--light);font:inherit;cursor:pointer;text-decoration:underline}
+.cartbar a{background:var(--primary);color:#fff;text-decoration:none;font-weight:600;padding:11px 22px;border-radius:50px}
+.cartbar a:hover{background:var(--soft);color:var(--dark)}
+.cats{position:sticky;top:94px;z-index:50;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;width:min(900px,92%);margin:26px auto 0;padding:8px;background:rgba(255,255,255,.8);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:50px;box-shadow:0 12px 30px -16px rgba(46,26,64,.5)}
+.cats a{text-decoration:none;color:var(--dark);font-weight:600;font-size:.95rem;padding:9px 18px;border-radius:50px;transition:.25s}
+.cats a b{background:var(--soft);border-radius:99px;padding:1px 8px;margin-left:6px;font-size:.78rem}
+.cats a:hover,.cats a.on{background:var(--primary);color:#fff}.cats a:hover b,.cats a.on b{background:rgba(255,255,255,.25)}
+.cat{width:min(1250px,92%);margin:56px auto 0;scroll-margin-top:170px}
+.cat-head h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;letter-spacing:-.02em;color:var(--dark)}
+.cat-head h2 span{font-size:.95rem;background:var(--primary);color:#fff;border-radius:99px;padding:3px 13px;vertical-align:middle;margin-left:8px;font-weight:600;letter-spacing:0}
+.cat-head p{color:var(--accent);margin-top:6px;font-size:1.05rem}
+.cat .grid{width:100%;margin:20px 0 0}
+.more{display:block;margin:26px auto 0;font:inherit;font-weight:600;padding:13px 30px;border-radius:50px;border:2px solid var(--primary);background:#fff;color:var(--primary);cursor:pointer;transition:.25s}
+.more:hover{background:var(--primary);color:#fff}
+main{padding-bottom:110px}
+.fcart{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:9991;width:62px;height:62px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;box-shadow:0 14px 30px -8px rgba(100,40,179,.7);transition:transform .25s,background .25s;text-decoration:none}
+.fcart:hover{background:var(--dark);transform:scale(1.08)}
+.fcart svg{width:28px;height:28px}
+.fcart b{position:absolute;top:-4px;right:-4px;min-width:24px;height:24px;padding:0 6px;border-radius:99px;background:#fff;color:var(--primary);border:2px solid var(--primary);font-size:.8rem;display:grid;place-items:center;font-weight:700}
+.fcart b[hidden]{display:none}
+@media(max-width:700px){.fcart{bottom:calc(env(safe-area-inset-bottom,0px) + 86px);width:56px;height:56px}}
 .pager{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:56px auto 90px;padding:0 4%}
 .pager button{font:inherit;font-weight:600;min-width:48px;height:48px;padding:0 18px;border-radius:50px;border:2px solid transparent;background:#fff;color:var(--dark);cursor:pointer;transition:.25s;box-shadow:0 8px 20px -12px rgba(46,26,64,.5)}
 .pager button:hover:not(:disabled){background:var(--soft)}
@@ -59,55 +86,87 @@ dd{font-weight:600;text-align:right}
 .nav-links a{font-size:1.15rem;padding:14px 4px;border-bottom:1px solid rgba(255,255,255,.12)}
 .nav-links .menu-book{display:block;margin-top:18px;text-align:center;background:var(--primary);border-radius:50px;border:none;padding:14px}
 .nav-btn{display:none}
-header.intro{padding-top:110px}}
+header.intro{padding-top:110px}.cats{top:84px;border-radius:26px}.cats a{font-size:.85rem;padding:8px 13px}}
 @media(max-width:420px){.floating-logo img{height:54px}.menu-toggle{width:44px;height:44px}header.intro{padding-top:100px}}
 @media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:14px}.info{padding:14px 14px 18px}.info h3{font-size:1.1rem}dl{font-size:.85rem;gap:6px 8px}.role{font-size:.7rem;padding:5px 11px;left:8px;top:8px}.book{padding:10px;font-size:.9rem}}
 @media(max-width:420px){.grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.card{animation:none}}
 </style></head><body>
 <canvas id="gl" aria-hidden="true"></canvas>
-<div class="floating-logo"><a href="index.html"><img src="assets/mum%20logo-08.svg" alt="Falcare Logo"></a></div>
+<div class="floating-logo"><a href="Falcare.html"><img src="assets/mum%20logo-08.svg" alt="Falcare Logo"></a></div>
 <header class="floating-navbar">
-<nav class="nav-links"><a href="index.html">Home</a><a href="About.html">About</a><a href="workers.html" class="current">Workers</a><a href="Jobs.html">Available Jobs</a><a href="contact.html" class="menu-book">Book Now</a></nav>
-<a href="contact.html" class="nav-btn">Book Now</a>
+<nav class="nav-links"><a href="Falcare.html">Home</a><a href="About.html">About</a><a href="workers.html" class="current">Workers</a><a href="Jobs.html">Available Jobs</a><a href="dashboard.html#order" class="menu-book">Book Now</a></nav>
+<a href="dashboard.html#order" class="nav-btn">Book Now</a>
 <div class="menu-toggle" role="button" tabindex="0" aria-label="Open menu" aria-expanded="false">☰</div>
 </header>
 <header class="intro">
 <h1>Meet our <span>workers</span></h1>
-<p>Vetted, trained and ready to join your home. Browse our nannies, house helps and caregivers.</p>
+<p>Vetted, trained and ready to join your home. Browse our dayburgs, nannies, garden boys and caregivers.</p>
 <p class="count" id="count"></p>
 </header>
-<main><div class="grid" id="grid" aria-live="polite"></div>
-<nav class="pager" id="pager" aria-label="Workers pages"></nav></main>
+<nav class="cats" id="cats" aria-label="Worker categories"></nav>
+<main id="sections" aria-live="polite"></main>
+<a class="fcart" id="fcart" href="dashboard.html" aria-label="Open my cart and dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.1a2 2 0 0 0 2-1.5L21.5 8H6"/></svg><b id="fcount" hidden>0</b></a>
+<div class="cartbar" id="cartbar" role="status"><span class="n"></span><button type="button" id="clr">Clear</button><a href="dashboard.html#order">Checkout →</a></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 var PHOTO="assets/worker.webp";
 /* Sample data: replace with your real workers (add a "photo" per worker if you have one) */
 var WORKERS=[
-["Grace Wanjiru",26,"Kikuyu",165,"Nanny"],["Faith Achieng",29,"Luo",168,"House help"],["Mercy Chebet",24,"Kalenjin",170,"Caregiver"],["Esther Mutheu",31,"Kamba",162,"Nanny"],
-["Lucy Nafula",27,"Luhya",166,"House help"],["Joy Kemunto",23,"Kisii",160,"Nanny"],["Purity Wambui",33,"Kikuyu",169,"Caregiver"],["Ruth Akinyi",28,"Luo",172,"House help"],
-["Naomi Jeptoo",25,"Kalenjin",167,"Nanny"],["Agnes Mwende",35,"Kamba",163,"Caregiver"],["Beatrice Naliaka",30,"Luhya",165,"House help"],["Sharon Moraa",22,"Kisii",164,"Nanny"],
-["Caroline Wangari",32,"Kikuyu",171,"House help"],["Dorcas Atieno",27,"Luo",168,"Caregiver"],["Hellen Jelagat",29,"Kalenjin",166,"Nanny"],["Janet Ndanu",34,"Kamba",161,"House help"],
-["Rose Nekesa",26,"Luhya",170,"Nanny"],["Winnie Nyaboke",24,"Kisii",167,"Caregiver"],["Judy Njeri",28,"Kikuyu",164,"House help"],["Millicent Adhiambo",31,"Luo",173,"Nanny"],
-["Cynthia Chepkoech",25,"Kalenjin",169,"House help"],["Sylvia Kavata",36,"Kamba",162,"Caregiver"],["Eunice Wekesa",27,"Luhya",165,"Nanny"],["Monica Bosibori",30,"Kisii",168,"House help"]
-].map(function(w){return{name:w[0],age:w[1],tribe:w[2],height:w[3],role:w[4]}});
-var PER=8,page=1,pages=Math.ceil(WORKERS.length/PER),grid=document.getElementById('grid'),pager=document.getElementById('pager'),count=document.getElementById('count');
+["Grace Wanjiru",26,"Kikuyu",165,"Nanny"],["Faith Achieng",29,"Luo",168,"Dayburg"],["Mercy Chebet",24,"Kalenjin",170,"Caregiver"],["Esther Mutheu",31,"Kamba",162,"Nanny"],
+["Lucy Nafula",27,"Luhya",166,"Dayburg"],["Joy Kemunto",23,"Kisii",160,"Nanny"],["Purity Wambui",33,"Kikuyu",169,"Caregiver"],["Ruth Akinyi",28,"Luo",172,"Dayburg"],
+["Naomi Jeptoo",25,"Kalenjin",167,"Nanny"],["Agnes Mwende",35,"Kamba",163,"Caregiver"],["Beatrice Naliaka",30,"Luhya",165,"Dayburg"],["Sharon Moraa",22,"Kisii",164,"Nanny"],
+["Caroline Wangari",32,"Kikuyu",171,"Dayburg"],["Dorcas Atieno",27,"Luo",168,"Caregiver"],["Hellen Jelagat",29,"Kalenjin",166,"Nanny"],["Janet Ndanu",34,"Kamba",161,"Dayburg"],
+["Rose Nekesa",26,"Luhya",170,"Nanny"],["Winnie Nyaboke",24,"Kisii",167,"Caregiver"],["Judy Njeri",28,"Kikuyu",164,"Dayburg"],["Millicent Adhiambo",31,"Luo",173,"Nanny"],
+["Cynthia Chepkoech",25,"Kalenjin",169,"Dayburg"],["Sylvia Kavata",36,"Kamba",162,"Caregiver"],["Eunice Wekesa",27,"Luhya",165,"Nanny"],["Monica Bosibori",30,"Kisii",168,"Dayburg"],
+["Peter Kamau",28,"Kikuyu",176,"Garden boy"],["John Otieno",32,"Luo",178,"Garden boy"],["Samuel Kiprono",27,"Kalenjin",180,"Garden boy"],["Daniel Mutua",30,"Kamba",175,"Garden boy"],["Brian Wafula",25,"Luhya",177,"Garden boy"],["Kevin Ongeri",29,"Kisii",174,"Garden boy"]
+].map(function(w){return{id:w[0].toLowerCase().replace(/[^a-z]+/g,"-"),name:w[0],age:w[1],tribe:w[2],height:w[3],role:w[4]}});
+var grid=document.getElementById('sections'),catsNav=document.getElementById('cats'),count=document.getElementById('count');
+var KEY='falcare_cart',cart=[];
+try{cart=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(cart))}catch(e){}}
+function inCart(id){return cart.some(function(c){return c.id===id})}
+function bar(){var b=document.getElementById('cartbar'),n=cart.length;b.classList.toggle('show',n>0);b.querySelector('.n').textContent=n+(n===1?' worker':' workers')+' selected';var fc=document.getElementById('fcount');fc.hidden=!n;fc.textContent=n;document.getElementById('fcart').href=n?'dashboard.html#order':'dashboard.html'}
 function cm2ft(c){var i=Math.round(c/2.54);return Math.floor(i/12)+"'"+(i%12)+'"'}
-function card(w,i){return '<article class="card" style="animation-delay:'+i*70+'ms"><div class="photo"><img src="'+(w.photo||PHOTO)+'" alt="'+w.name+'" loading="lazy"><span class="role">'+w.role+'</span></div><div class="info"><h3>'+w.name+'</h3><dl><dt>Age</dt><dd>'+w.age+' years</dd><dt>Tribe</dt><dd>'+w.tribe+'</dd><dt>Height</dt><dd>'+w.height+' cm ('+cm2ft(w.height)+')</dd></dl><a class="book" href="contact.html">Book '+w.name.split(' ')[0]+'</a></div></article>'}
-function btn(label,p,dis,on,aria){return '<button '+(dis?'disabled ':'')+(on?'class="on" aria-current="page" ':'')+'data-p="'+p+'" aria-label="'+(aria||'Page '+label)+'">'+label+'</button>'}
-function render(scroll){
- var s=(page-1)*PER,list=WORKERS.slice(s,s+PER);
- grid.innerHTML=list.map(card).join('');
- count.textContent='Showing '+(s+1)+'–'+(s+list.length)+' of '+WORKERS.length+' workers';
- var h=btn('Previous',page-1,page===1,false,'Previous page');
- for(var p=1;p<=pages;p++)h+=btn(p,p,false,p===page);
- h+=btn('Next',page+1,page===pages,false,'Next page');
- pager.innerHTML=h;
- if(scroll&&window.pulse)pulse();
- if(scroll)document.getElementById('count').scrollIntoView({behavior:'smooth',block:'start'});
+function card(w,i){return '<article class="card'+(inCart(w.id)?' sel':'')+'" style="animation-delay:'+i*70+'ms"><div class="photo"><img src="'+(w.photo||PHOTO)+'" alt="'+w.name+'" loading="lazy"><span class="role">'+w.role+'</span></div><div class="info"><h3>'+w.name+'</h3><dl><dt>Age</dt><dd>'+w.age+' years</dd><dt>Tribe</dt><dd>'+w.tribe+'</dd><dt>Height</dt><dd>'+w.height+' cm ('+cm2ft(w.height)+')</dd></dl><button type="button" class="book pick" data-id="'+w.id+'" aria-pressed="'+inCart(w.id)+'">'+(inCart(w.id)?'Selected ✓':'Select '+w.name.split(' ')[0])+'</button></div></article>'}
+var CATS=[
+ {role:'Dayburg',title:'Dayburgs',sub:'Live-out house help who come in daily and go home each evening.'},
+ {role:'Nanny',title:'Nannies',sub:'Caring, trained childcare for babies, toddlers and school-age kids.'},
+ {role:'Garden boy',title:'Garden boys',sub:'Lawn, hedges, flower beds and general compound care.'},
+ {role:'Caregiver',title:'Caregivers',sub:'Compassionate home support for the elderly and those needing care.'}
+],SHOW=4,open={};
+function cid(r){return 'cat-'+r.toLowerCase().replace(/ /g,'-')}
+function render(){
+ var h='',c='',n=0;
+ CATS.forEach(function(k){
+  var list=WORKERS.filter(function(w){return w.role===k.role});if(!list.length)return;n++;
+  var shown=open[k.role]?list:list.slice(0,SHOW);
+  c+='<a href="#'+cid(k.role)+'">'+k.title+'<b>'+list.length+'</b></a>';
+  h+='<section class="cat" id="'+cid(k.role)+'"><div class="cat-head"><h2>'+k.title+'<span>'+list.length+'</span></h2><p>'+k.sub+'</p></div><div class="grid">'+shown.map(card).join('')+'</div>'+
+   (list.length>SHOW?'<button type="button" class="more" data-r="'+k.role+'">'+(open[k.role]?'Show fewer':'Show all '+list.length+' '+k.title.toLowerCase())+'</button>':'')+'</section>';
+ });
+ grid.innerHTML=h;catsNav.innerHTML=c;
+ count.textContent=WORKERS.length+' workers across '+n+' categories';
 }
-pager.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.disabled)return;page=+b.dataset.p;render(true)});
-render(false);
+grid.addEventListener('click',function(e){
+ var m=e.target.closest('.more');if(!m)return;
+ var r=m.dataset.r;open[r]=!open[r];render();
+ if(!open[r])document.getElementById(cid(r)).scrollIntoView({behavior:'smooth',block:'start'});
+});
+/* highlight active category chip */
+addEventListener('scroll',function(){
+ var cur=null;CATS.forEach(function(k){var el=document.getElementById(cid(k.role));if(el&&el.getBoundingClientRect().top<220)cur=cid(k.role)});
+ [].forEach.call(catsNav.querySelectorAll('a'),function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+cur)});
+},{passive:true});
+grid.addEventListener('click',function(e){
+ var b=e.target.closest('.pick');if(!b)return;
+ var id=b.dataset.id,w=WORKERS.filter(function(x){return x.id===id})[0],card=b.closest('.card');
+ if(inCart(id)){cart=cart.filter(function(c){return c.id!==id})}
+ else{cart.push({id:w.id,name:w.name,role:w.role,age:w.age,tribe:w.tribe,height:w.height,photo:w.photo||PHOTO})}
+ save();var on=inCart(id);card.classList.toggle('sel',on);b.setAttribute('aria-pressed',on);
+ b.textContent=on?'Selected ✓':'Select '+w.name.split(' ')[0];bar()});
+document.getElementById('clr').addEventListener('click',function(){cart=[];save();render();bar()});
+render();bar();
 /* ---- Three.js 3D scroll scene ---- */
 (function(){
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;

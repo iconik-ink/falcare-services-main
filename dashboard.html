@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="auth.js"></script>
+<title>My Dashboard | Falcare Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6428B3;--light:#C3A3E4;--soft:#CBA5ED;--dark:#2E1A40;--accent:#8A67A9;--line:#e6d9f3;--ok:#1f9d6b;--warn:#c77b00;--bad:#c0392b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;color:var(--dark);background:#f6f1fb;min-height:100vh;line-height:1.5}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+aside.side{background:var(--dark);color:#fff;padding:18px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
+.side .logo{display:block;padding:4px 8px 14px}.side .logo img{height:64px}
+.side nav{display:flex;flex-direction:column;gap:4px}
+.side nav a{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;font-weight:600;color:#d9c9ee;transition:.2s}
+.side nav a:hover{background:rgba(255,255,255,.08)}
+.side nav a.on{background:var(--primary);color:#fff}
+.side nav a em{font-style:normal;margin-left:auto;background:var(--soft);color:var(--dark);border-radius:99px;font-size:.75rem;padding:0 8px}
+.side .bottom{margin-top:auto;font-size:.85rem;color:#b8a3cc;padding:8px}.side .bottom a{color:var(--light);text-decoration:underline}
+main{padding:28px clamp(16px,3vw,40px) 60px;max-width:1100px;width:100%}
+h1{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+h1 span{color:var(--primary)}
+.lead{color:var(--accent);margin:.3rem 0 1.4rem}
+.view{display:none}.view.show{display:block;animation:in .25s}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:#fff;border-radius:22px;padding:1.2rem 1.3rem;box-shadow:0 18px 36px -26px rgba(46,26,64,.5);margin-bottom:1rem}
+.card h2{font-size:1.15rem;font-weight:700;margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem}
+.card h2 i{font-style:normal;background:var(--primary);color:#fff;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.8rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1rem}
+.stat{background:#fff;border-radius:22px;padding:1.1rem 1.2rem;box-shadow:0 18px 36px -26px rgba(46,26,64,.5)}
+.stat b{display:block;font-size:2.2rem;font-weight:800;color:var(--primary);line-height:1}.stat span{color:var(--accent);font-weight:500;font-size:.9rem}
+.btn{display:inline-block;padding:.8rem 1.6rem;border-radius:99px;border:none;font-weight:700;font-size:.95rem;transition:.2s}
+.btn.p{background:var(--primary);color:#fff}.btn.p:hover{background:var(--dark)}.btn.p:disabled{background:#cdbfdc;cursor:not-allowed}
+.btn.o{background:#fff;border:2px solid var(--primary);color:var(--primary);padding:.55rem 1.1rem}.btn.o:hover{background:var(--primary);color:#fff}
+.btn.wa{background:#25D366;color:#fff}.btn.s{padding:.5rem 1rem;font-size:.85rem}
+.btn.r{background:none;color:var(--bad);padding:.5rem .6rem;font-size:.85rem}
+.row-btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem}
+/* worker lines */
+.sw{display:flex;align-items:center;gap:.8rem;border:2px solid var(--line);border-radius:16px;padding:.5rem .8rem .5rem .5rem;margin-bottom:.6rem}
+.sw img{width:54px;height:64px;object-fit:cover;object-position:top;border-radius:10px;background:var(--soft)}
+.sw h3{font-size:1rem;color:var(--primary)}.sw small{color:#6b5a7b}
+.sw .x{margin-left:auto;background:none;border:none;color:var(--bad);font-weight:600;font-size:.85rem}
+.empty{text-align:center;padding:1.6rem 1rem;color:#6b5a7b}.empty p{margin-bottom:.8rem}
+/* form */
+.g{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}.g .full{grid-column:1/-1}
+label.l{font-size:.82rem;font-weight:600;display:block;margin-bottom:.3rem}
+input,textarea{width:100%;padding:.72rem .95rem;border:1.5px solid var(--line);border-radius:14px;font:inherit;color:var(--dark);background:#fff}
+input:focus,textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(100,40,179,.15)}
+textarea{min-height:76px;resize:vertical}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pill{padding:.55rem 1rem;border:1.5px solid var(--line);border-radius:99px;background:#fff;font-weight:600;font-size:.88rem}
+.pill.sel{background:var(--primary);border-color:var(--primary);color:#fff}
+.err{color:var(--bad);font-size:.78rem;margin-top:.25rem;display:none}.bad .err{display:block}.bad input,.bad .pills{border-color:var(--bad)}
+.pay{display:grid;gap:.6rem}
+.po{display:flex;gap:.7rem;align-items:flex-start;border:2px solid var(--line);border-radius:16px;padding:.8rem 1rem;cursor:pointer}
+.po.sel{border-color:var(--primary);background:#f6effd}.po input{width:auto;margin-top:.3rem}.po small{color:#6b5a7b;display:block}
+.mp{margin-top:.7rem;background:#f6effd;border-radius:14px;padding:.8rem 1rem;font-size:.9rem}
+.cols{display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start}
+.sum{position:sticky;top:16px}
+.row{display:flex;justify-content:space-between;gap:.8rem;padding:.5rem 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+.row span:first-child{color:#6b5a7b}.row span:last-child{font-weight:600;text-align:right}.dash{color:#b5a3c6!important;font-weight:400!important}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:1.15rem;padding:.7rem 0}
+.sum .btn{width:100%;margin-top:.4rem}.note{font-size:.78rem;color:#6b5a7b;margin-top:.6rem}
+/* orders */
+.ord{border:2px solid var(--line);border-radius:18px;padding:1rem 1.1rem;margin-bottom:.8rem}
+.ord .h{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center}
+.ord .id{font-weight:800}.ord .d{color:#6b5a7b;font-size:.85rem}
+.badge{padding:.2rem .8rem;border-radius:99px;font-size:.78rem;font-weight:700;background:#fff3dc;color:var(--warn)}
+.badge.ok{background:#ddf5ea;color:var(--ok)}.badge.x{background:#fde4e1;color:var(--bad)}
+.ord p{margin:.5rem 0;font-size:.92rem}
+.done{text-align:center;padding:1.5rem .5rem}.ck{width:72px;height:72px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:2rem;margin:0 auto 1rem}
+@media(max-width:900px){.cols{grid-template-columns:1fr}.sum{position:static}.stats{grid-template-columns:1fr}
+ .app{grid-template-columns:1fr}
+ aside.side{position:fixed;bottom:0;left:0;right:0;top:auto;height:auto;flex-direction:row;padding:6px 8px calc(env(safe-area-inset-bottom,0px) + 6px);z-index:50;justify-content:center}
+ .side .logo,.side .bottom{display:none}.side nav{flex-direction:row;width:100%;justify-content:space-around}
+ .side nav a{flex-direction:column;gap:0;font-size:.72rem;padding:6px 10px;text-align:center}.side nav a em{position:absolute;margin:-4px 0 0 22px}
+ main{padding-bottom:100px}}
+@media(max-width:520px){.g{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+  <a class="logo" href="Falcare.html"><img src="assets/mum%20logo-08.svg" alt="Falcare"></a>
+  <nav id="nav">
+    <a href="#overview" data-v="overview"><span>🏠</span>Overview</a>
+    <a href="#order" data-v="order"><span>🛒</span>New order<em id="nCart" hidden></em></a>
+    <a href="#orders" data-v="orders"><span>📋</span>My orders</a>
+    <a href="#profile" data-v="profile"><span>👤</span>Profile</a>
+  </nav>
+  <div class="bottom"><a href="workers.html">Browse workers</a><br>Help: <a href="tel:+254708312617">+254708312617</a></div>
+</aside>
+
+<main>
+<!-- OVERVIEW -->
+<section class="view" id="v-overview">
+  <h1>Hello, <span id="hi">there</span> 👋</h1>
+  <p class="lead">Order a nanny, dayburg or garden boy and track your bookings here.</p>
+  <div class="stats">
+    <div class="stat"><b id="sCart">0</b><span>Workers in your order</span></div>
+    <div class="stat"><b id="sAct">0</b><span>Active orders</span></div>
+    <div class="stat"><b id="sAll">0</b><span>Total orders</span></div>
+  </div>
+  <div class="card"><h2>Quick actions</h2>
+    <div class="row-btns"><a class="btn p" href="workers.html">Browse workers</a><a class="btn o" href="#order" id="qCheckout">Continue to checkout</a></div></div>
+  <div class="card"><h2>Recent orders</h2><div id="recent"></div></div>
+</section>
+
+<!-- ORDER + CHECKOUT -->
+<section class="view" id="v-order">
+  <h1>New order &amp; <span>checkout</span></h1>
+  <p class="lead">Review your workers, set the schedule, choose how to pay, and place your order.</p>
+  <div id="orderForm" class="cols">
+    <div>
+      <div class="card"><h2><i>1</i>Your workers</h2><div id="list"></div><a class="btn o s" href="workers.html">+ Add more workers</a></div>
+      <div class="card"><h2><i>2</i>Schedule</h2>
+        <div class="g">
+          <div class="full" id="gArr"><label class="l">Arrangement</label><div class="pills" data-k="arrangement"><button type="button" class="pill" data-v="Live-in">Live-in</button><button type="button" class="pill" data-v="Live-out">Live-out (daily)</button></div><div class="err">Choose one</div></div>
+          <div class="full" id="gDur"><label class="l">Duration</label><div class="pills" data-k="duration"><button type="button" class="pill" data-v="Full-time">Full-time</button><button type="button" class="pill" data-v="Part-time">Part-time</button><button type="button" class="pill" data-v="One-off">One-off</button></div><div class="err">Choose one</div></div>
+          <div id="gStart"><label class="l" for="start">Start date</label><input type="date" id="start"><div class="err">Choose a start date</div></div>
+          <div><label class="l" for="area">Your area</label><input id="area" placeholder="e.g. Kilimani, Karen"></div>
+          <div class="full"><label class="l" for="notes">Special requirements (optional)</label><textarea id="notes" placeholder="Children's ages, cooking, pets, languages…"></textarea></div>
+        </div></div>
+      <div class="card"><h2><i>3</i>Your contact</h2>
+        <div class="g">
+          <div class="full" id="gName"><label class="l" for="name">Full name</label><input id="name" autocomplete="name"><div class="err">Enter your name</div></div>
+          <div id="gPhone"><label class="l" for="phone">Phone / WhatsApp</label><input id="phone" type="tel" placeholder="+254 7XX XXX XXX" autocomplete="tel"><div class="err">Enter a valid phone number</div></div>
+          <div><label class="l" for="email">Email (optional)</label><input id="email" type="email" autocomplete="email"></div>
+        </div></div>
+      <div class="card"><h2><i>4</i>Payment</h2>
+        <div class="pay" id="pay"></div></div>
+    </div>
+    <aside class="card sum"><h2>Order summary</h2><div id="summary"></div><div id="totalBox"></div>
+      <button type="button" class="btn p" id="place">Place order</button>
+      <p class="note">Your order is saved here and sent to Falcare on WhatsApp for confirmation.</p></aside>
+  </div>
+  <div id="orderDone" class="card done" hidden>
+    <div class="ck">✓</div><h2 style="justify-content:center;font-size:1.6rem">Order placed</h2>
+    <p class="lead" id="doneTxt"></p>
+    <div class="row-btns" style="justify-content:center"><a class="btn wa" id="doneWa" target="_blank" rel="noopener">Send to Falcare on WhatsApp</a><a class="btn o" href="#orders">View my orders</a></div>
+  </div>
+</section>
+
+<!-- ORDERS -->
+<section class="view" id="v-orders">
+  <h1>My <span>orders</span></h1><p class="lead">Every booking placed from your account on this device.</p>
+  <div id="ordersList"></div>
+</section>
+
+<!-- PROFILE -->
+<section class="view" id="v-profile">
+  <h1>My <span>profile</span></h1><p class="lead">Saved details make checkout faster.</p>
+  <div class="card"><div class="g">
+    <div class="full"><label class="l" for="pName">Full name</label><input id="pName"></div>
+    <div><label class="l" for="pPhone">Phone / WhatsApp</label><input id="pPhone" type="tel"></div>
+    <div><label class="l" for="pEmail">Email</label><input id="pEmail" type="email"></div>
+    <div class="full"><label class="l" for="pArea">Home area</label><input id="pArea"></div>
+  </div><div class="row-btns" style="margin-top:1rem"><button type="button" class="btn p" id="pSave">Save profile</button><span id="pOk" class="note" hidden>Saved ✓</span></div></div>
+</section>
+</main>
+</div>
+
+<script>
+/* ===== SETTINGS ===== */
+var WHATSAPP="254708312617";
+var FEES={"Dayburg":0,"Nanny":0,"Garden boy":0,"Caregiver":0}; /* KES per worker; 0 = fee confirmed by Falcare */
+var MPESA={label:"Till number",number:""}; /* put your M-Pesa Till/Paybill here to show pay instructions */
+/* ==================== */
+var K={cart:'falcare_cart',orders:'falcare_orders',prof:'falcare_profile'};
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var $=function(s){return document.querySelector(s)},$$=function(s){return[].slice.call(document.querySelectorAll(s))};
+var cart=load(K.cart,[]),orders=load(K.orders,[]),prof=load(K.prof,{}),F={arrangement:null,duration:null,pay:'later'};
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function kes(n){return 'KES '+n.toLocaleString('en-KE')}
+function fee(list){return list.reduce(function(t,w){return t+(FEES[w.role]||0)},0)}
+function fdate(v){return v?new Date(v).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}):''}
+$('#start').min=new Date().toISOString().slice(0,10);
+
+/* ---- routing ---- */
+function route(){
+ var v=(location.hash||'#overview').slice(1);if(!$('#v-'+v))v='overview';
+ cart=load(K.cart,[]);orders=load(K.orders,[]);
+ $$('.view').forEach(function(s){s.classList.toggle('show',s.id==='v-'+v)});
+ $$('#nav a').forEach(function(a){a.classList.toggle('on',a.dataset.v===v)});
+ if(v==='order'&&$('#orderForm').hidden&&!justPlaced){$('#orderForm').hidden=false;$('#orderDone').hidden=true}
+ justPlaced=false;draw();window.scrollTo(0,0);
+}
+var justPlaced=false;
+addEventListener('hashchange',route);
+
+/* ---- drawing ---- */
+function rows(a){return a.map(function(r){return '<div class="row"><span>'+r[0]+'</span><span class="'+(r[1]?'':'dash')+'">'+(r[1]?esc(r[1]):'—')+'</span></div>'}).join('')}
+function badge(o){var c=o.status==='Cancelled'?'x':(o.status==='Confirmed'?'ok':'');return '<span class="badge '+c+'">'+(o.status==='Pending'?'Awaiting confirmation':o.status)+'</span>'}
+function orderCard(o){
+ return '<div class="ord"><div class="h"><div><span class="id">'+esc(o.id)+'</span> <span class="d">· '+esc(o.date)+'</span></div>'+badge(o)+'</div>'+
+ '<p><b>'+o.workers.map(function(w){return esc(w.name)+' ('+esc(w.role)+')'}).join(', ')+'</b><br><span class="d">'+esc(o.arrangement)+' · '+esc(o.duration)+' · starts '+esc(fdate(o.start))+(o.area?' · '+esc(o.area):'')+'</span></p>'+
+ '<p class="d">Payment: '+(o.pay==='mpesa'?'M-Pesa'+(o.code?' ('+esc(o.code)+')':''):'Pay on confirmation')+' · '+(o.total>0?kes(o.total):'Fee confirmed by Falcare')+'</p>'+
+ '<div class="row-btns"><a class="btn wa s" target="_blank" rel="noopener" href="'+waLink(o)+'" data-sent="'+esc(o.id)+'">'+(o.sent?'Resend on WhatsApp':'Send to Falcare')+'</a>'+
+ '<button type="button" class="btn o s" data-re="'+esc(o.id)+'">Reorder</button>'+
+ (o.status==='Pending'?'<button type="button" class="btn r" data-cx="'+esc(o.id)+'">Cancel order</button>':'')+'</div></div>';
+}
+function draw(){
+ var act=orders.filter(function(o){return o.status==='Pending'||o.status==='Confirmed'}).length;
+ $('#hi').textContent=(prof.name||'there').split(' ')[0];
+ $('#sCart').textContent=cart.length;$('#sAct').textContent=act;$('#sAll').textContent=orders.length;
+ var n=$('#nCart');n.hidden=!cart.length;n.textContent=cart.length;
+ $('#qCheckout').style.display=cart.length?'':'none';
+ $('#recent').innerHTML=orders.length?orders.slice(0,2).map(orderCard).join(''):'<div class="empty"><p>No orders yet.</p><a class="btn p" href="workers.html">Find a worker</a></div>';
+ $('#ordersList').innerHTML=orders.length?orders.map(orderCard).join(''):'<div class="card empty"><p>You haven\'t placed any orders yet.</p><a class="btn p" href="workers.html">Browse workers</a></div>';
+ $('#list').innerHTML=cart.length?cart.map(function(w){return '<div class="sw"><img src="'+esc(w.photo)+'" alt=""><div><h3>'+esc(w.name)+'</h3><small>'+esc(w.role)+' · '+w.age+' yrs · '+esc(w.tribe)+'</small></div><button type="button" class="x" data-rm="'+esc(w.id)+'">Remove</button></div>'}).join(''):'<div class="empty"><p>No workers selected yet.</p></div>';
+ $$('.pills').forEach(function(p){[].forEach.call(p.children,function(b){b.classList.toggle('sel',F[p.dataset.k]===b.dataset.v)})});
+ var pay='<label class="po '+(F.pay==='later'?'sel':'')+'"><input type="radio" name="pay" value="later" '+(F.pay==='later'?'checked':'')+'><div><b>Pay on confirmation</b><small>Falcare confirms availability first, then shares payment details.</small></div></label>';
+ if(MPESA.number)pay+='<label class="po '+(F.pay==='mpesa'?'sel':'')+'"><input type="radio" name="pay" value="mpesa" '+(F.pay==='mpesa'?'checked':'')+'><div><b>M-Pesa</b><small>Pay now and enter your transaction code.</small></div></label>'+
+  (F.pay==='mpesa'?'<div class="mp">Send to '+esc(MPESA.label)+' <b>'+esc(MPESA.number)+'</b>'+(fee(cart)>0?' · Amount: <b>'+kes(fee(cart))+'</b>':'')+'<div id="gCode" style="margin-top:.6rem"><label class="l" for="code">M-Pesa transaction code</label><input id="code" placeholder="e.g. SHK2A3B4C5" value="'+esc(F.code||'')+'"><div class="err">Enter your M-Pesa code</div></div></div>':'');
+ var pe=$('#pay');if(pe.dataset.h!==pay){pe.innerHTML=pay;pe.dataset.h=pay}
+ var t=fee(cart);
+ $('#summary').innerHTML=rows([['Workers',cart.map(function(w){return w.name}).join(', ')],['Arrangement',F.arrangement],['Duration',F.duration],['Start',fdate($('#start').value)],['Area',$('#area').value.trim()],['Payment',F.pay==='mpesa'?'M-Pesa':'On confirmation']]);
+ $('#totalBox').innerHTML='<div class="total"><span>Total</span><span>'+(t>0?kes(t):'To be confirmed')+'</span></div>';
+ $('#place').disabled=!cart.length;
+}
+
+/* ---- events ---- */
+document.addEventListener('click',function(e){
+ var t=e.target,b;
+ if(b=t.closest('[data-rm]')){cart=cart.filter(function(c){return c.id!==b.dataset.rm});store(K.cart,cart);draw()}
+ else if(b=t.closest('.pill')){F[b.parentNode.dataset.k]=b.dataset.v;draw()}
+ else if(b=t.closest('[data-cx]')){if(confirm('Cancel this order?')){orders.forEach(function(o){if(o.id===b.dataset.cx)o.status='Cancelled'});store(K.orders,orders);draw()}}
+ else if(b=t.closest('[data-re]')){var o=orders.filter(function(x){return x.id===b.dataset.re})[0];cart=o.workers.map(function(w){return w});store(K.cart,cart);F.arrangement=o.arrangement;F.duration=o.duration;location.hash='#order';route()}
+ else if(b=t.closest('[data-sent]')){orders.forEach(function(o){if(o.id===b.dataset.sent)o.sent=true});store(K.orders,orders)}
+});
+document.addEventListener('change',function(e){if(e.target.name==='pay'){F.pay=e.target.value;$('#pay').dataset.h='';draw()}});
+document.addEventListener('input',function(e){if(e.target.id==='code')F.code=e.target.value;if(['start','area'].indexOf(e.target.id)>-1)draw()});
+
+function valid(){
+ function m(g,ok){$(g).classList.toggle('bad',!ok);return ok}
+ var ok=[m('#gArr',!!F.arrangement),m('#gDur',!!F.duration),m('#gStart',!!$('#start').value),m('#gName',$('#name').value.trim().length>1),m('#gPhone',$('#phone').value.replace(/\D/g,'').length>=9)];
+ if(F.pay==='mpesa'&&$('#gCode'))ok.push(m('#gCode',(F.code||'').trim().length>=8));
+ var good=ok.every(Boolean);if(!good){var f=document.querySelector('#v-order .bad');if(f)f.scrollIntoView({behavior:'smooth',block:'center'})}
+ return good;
+}
+function msg(o){
+ var l=['Hello Falcare, new order '+o.id+':',''].concat(o.workers.map(function(w,i){return (i+1)+'. '+w.name+' ('+w.role+')'}),['','Arrangement: '+o.arrangement+', '+o.duration,'Start date: '+fdate(o.start)]);
+ if(o.area)l.push('Area: '+o.area);if(o.notes)l.push('Notes: '+o.notes);
+ l.push('Payment: '+(o.pay==='mpesa'?'M-Pesa, code '+o.code:'On confirmation'));if(o.total>0)l.push('Total: '+kes(o.total));
+ l.push('','Name: '+o.name,'Phone: '+o.phone);if(o.email)l.push('Email: '+o.email);return l.join('\n');
+}
+function waLink(o){return 'https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(msg(o))}
+
+$('#place').onclick=function(){
+ if(!cart.length||!valid())return;
+ var o={id:'FC-'+Date.now().toString(36).toUpperCase().slice(-6),date:new Date().toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}),
+  workers:cart.map(function(w){return{id:w.id,name:w.name,role:w.role,age:w.age,tribe:w.tribe,height:w.height,photo:w.photo}}),
+  arrangement:F.arrangement,duration:F.duration,start:$('#start').value,area:$('#area').value.trim(),notes:$('#notes').value.trim(),
+  name:$('#name').value.trim(),phone:$('#phone').value.trim(),email:$('#email').value.trim(),pay:F.pay,code:(F.code||'').trim(),total:fee(cart),status:'Pending',sent:false};
+ orders.unshift(o);store(K.orders,orders);cart=[];store(K.cart,cart);
+ if(!prof.name){prof={name:o.name,phone:o.phone,email:o.email,area:o.area};store(K.prof,prof)}
+ $('#orderForm').hidden=true;$('#orderDone').hidden=false;
+ $('#doneTxt').textContent='Order '+o.id+' is saved. Send it to Falcare on WhatsApp so we can confirm your workers.';
+ $('#doneWa').href=waLink(o);$('#doneWa').onclick=function(){o.sent=true;store(K.orders,orders)};
+ justPlaced=true;draw();window.scrollTo(0,0);
+};
+
+/* ---- profile ---- */
+function fillForms(){
+ [['pName','name'],['pPhone','phone'],['pEmail','email'],['pArea','area']].forEach(function(p){$('#'+p[0]).value=prof[p[1]]||''});
+ [['name','name'],['phone','phone'],['email','email'],['area','area']].forEach(function(p){if(!$('#'+p[0]).value)$('#'+p[0]).value=prof[p[1]]||''});
+}
+$('#pSave').onclick=function(){
+ prof={name:$('#pName').value.trim(),phone:$('#pPhone').value.trim(),email:$('#pEmail').value.trim(),area:$('#pArea').value.trim()};
+ store(K.prof,prof);fillForms();draw();$('#pOk').hidden=false;setTimeout(function(){$('#pOk').hidden=true},2000);
+};
+fillForms();route();
+</script>
+</body>
+</html>

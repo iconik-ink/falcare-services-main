@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Get a Quote | Falcare Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6428B3;--light:#C3A3E4;--soft:#CBA5ED;--dark:#2E1A40;--accent:#8A67A9;--line:#e6d9f3;--ok:#1f9d6b}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;color:var(--dark);background:linear-gradient(180deg,#efe6fa,#f8f4fd 40%,#efe6fa);min-height:100vh;line-height:1.5}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+header{background:var(--dark);color:#fff}
+.nav{max-width:1000px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav img{height:56px;display:block}
+.nav ul{display:flex;gap:1.4rem;list-style:none;font-weight:600;font-size:.95rem}
+.nav ul a:hover,.nav ul a.on{color:var(--soft)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px 3rem}
+.title{padding:2rem 0 1.2rem}
+.title h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.title h1 span{color:var(--primary)}
+.title p{color:var(--accent);margin-top:.4rem}
+.panel{background:#fff;border-radius:24px;box-shadow:0 22px 44px -26px rgba(46,26,64,.45);padding:1.5rem}
+.view{display:none}.view.show{display:block}
+h2{font-size:1.6rem;font-weight:700;line-height:1.15}
+.sub{color:#6b5a7b;font-size:.92rem;margin:.2rem 0 1.1rem}
+.f{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}.f .full{grid-column:1/-1}
+label.l{font-size:.82rem;font-weight:600;display:block;margin-bottom:.3rem}
+input,textarea,select{width:100%;padding:.75rem .95rem;border:1.5px solid var(--line);border-radius:14px;font:inherit;color:var(--dark);background:#fff}
+input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(100,40,179,.25)}
+textarea{min-height:80px;resize:vertical}
+.err{color:#c0392b;font-size:.78rem;margin-top:.25rem;display:none}
+.bad input,.bad select{border-color:#c0392b}.bad .err{display:block}
+.btn{padding:.85rem 1.7rem;border-radius:99px;border:none;font-weight:700;font-size:1rem;display:inline-block;text-align:center}
+.btn.p{background:var(--primary);color:#fff;box-shadow:0 8px 18px -8px rgba(100,40,179,.6)}
+.btn.p:hover{background:var(--dark)}.btn.p:disabled{background:#cdbfdc;box-shadow:none;cursor:not-allowed}
+.btn.o{background:#fff;border:2px solid var(--primary);color:var(--primary)}
+.btn.wa{background:#25D366;color:#fff}
+.btn.g{background:none;color:var(--accent);text-decoration:underline;padding:.85rem .4rem}
+.bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1.3rem}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:.5rem}
+.opt{border:2px solid var(--line);border-radius:18px;padding:1rem;cursor:pointer;background:#fff;text-align:left;font:inherit;color:inherit}
+.opt:hover{border-color:var(--light)}.opt.sel{border-color:var(--primary);background:#f6effd}
+.opt b{display:block;font-size:1.05rem;color:var(--primary)}.opt small{color:#6b5a7b}
+.note{background:#f6effd;border-radius:14px;padding:.8rem 1rem;font-size:.86rem;margin-top:1rem}
+.link{display:flex;gap:.5rem;margin:.8rem 0}.link input{font-size:.85rem}
+/* portal */
+.ph{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:flex-start}
+.status{display:flex;gap:.4rem;flex-wrap:wrap}
+.chip{background:#f1e8fa;color:var(--accent);border-radius:99px;padding:.2rem .8rem;font-size:.78rem;font-weight:600}
+.chip.on{background:var(--ok);color:#fff}
+.tabs{display:flex;gap:.3rem;border-bottom:1px solid var(--line);margin:1.1rem 0}
+.tab{background:none;border:none;padding:.7rem 1rem;font-weight:600;color:#a592b8;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--primary);border-color:var(--primary)}
+.pane{display:none}.pane.show{display:block}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+td,th{padding:.6rem .3rem;border-bottom:1px dashed var(--line);text-align:left}
+th{font-size:.8rem;color:#6b5a7b}td:last-child,th:last-child{text-align:right}
+.tot td{font-weight:800;font-size:1.05rem;border-bottom:none}
+.sig{font-family:'Brush Script MT','Segoe Script',cursive;font-size:2.2rem;color:var(--primary);border-bottom:2px solid var(--dark);display:inline-block;padding:0 1rem}
+.chat{display:flex;flex-direction:column;gap:.5rem;max-height:320px;overflow-y:auto;padding:.3rem;margin-bottom:.8rem}
+.m{max-width:80%;padding:.6rem .9rem;border-radius:16px;font-size:.92rem;background:#f1e8fa}
+.m small{display:block;color:#8a7a9b;font-size:.7rem}
+.m.me{align-self:flex-end;background:var(--primary);color:#fff}.m.me small{color:#e3d3f5}
+.send{display:flex;gap:.5rem}
+.ck{display:flex;gap:.6rem;align-items:flex-start;font-size:.88rem;margin:.9rem 0}.ck input{width:auto;margin-top:.25rem}
+.who{font-weight:700;margin:.2rem 0}
+@media(max-width:600px){.f,.choice{grid-template-columns:1fr}.nav ul{display:none}.panel{padding:1.1rem}.tab{padding:.6rem .6rem;font-size:.9rem}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+  <a href="Falcare.html"><img src="assets/mum%20logo-08.svg" alt="Falcare"></a>
+  <ul><li><a href="Falcare.html">Home</a></li><li><a href="About.html">About</a></li><li><a href="workers.html">Workers</a></li><li><a href="Jobs.html">Available Jobs</a></li><li><a href="booking.html">Book Now</a></li></ul>
+</div></header>
+
+<div class="wrap">
+  <div class="title"><h1>Get a <span>quote</span></h1><p>Tell us what you need. Your quote opens in a private portal where you can sign it, chat with us and pay the deposit.</p></div>
+
+  <!-- 1. Request -->
+  <section class="panel view show" id="vReq">
+    <h2>What do you need?</h2>
+    <p class="sub">Takes about a minute.</p>
+    <div class="f">
+      <div class="full" id="gSvc"><label class="l" for="svc">Service</label><select id="svc"></select><div class="err">Choose a service</div></div>
+      <div><label class="l" for="qty">How many workers?</label><input id="qty" type="number" min="1" max="20" value="1"></div>
+      <div><label class="l" for="area">Your area</label><input id="area" placeholder="e.g. Kilimani, Karen, Ruaka"></div>
+      <div class="full"><label class="l" for="notes">Details (optional)</label><textarea id="notes" placeholder="Start date, children's ages, cooking, pets, languages…"></textarea></div>
+      <div class="full" id="gName"><label class="l" for="name">Full name</label><input id="name" autocomplete="name"><div class="err">Please enter your name</div></div>
+      <div id="gPhone"><label class="l" for="phone">Phone / WhatsApp</label><input id="phone" type="tel" placeholder="+254 7XX XXX XXX" autocomplete="tel"><div class="err">Enter a valid phone number</div></div>
+      <div id="gEmail"><label class="l" for="email">Email</label><input id="email" type="email" autocomplete="email"><div class="err">Enter a valid email</div></div>
+    </div>
+    <div class="bar"><button class="btn p" id="toAccess" type="button">Request my quote</button><button class="btn g" id="toSignin" type="button">I already have an account</button></div>
+  </section>
+
+  <!-- 2. Access choice -->
+  <section class="panel view" id="vAccess">
+    <h2>How would you like to open your quote?</h2>
+    <p class="sub">Your quote is private. Pick how you want to get back to it.</p>
+    <div class="choice">
+      <button type="button" class="opt sel" data-m="link"><b>Secure private link</b><small>No password. Anyone with the link can open it, so keep it to yourself.</small></button>
+      <button type="button" class="opt" data-m="acct"><b>Create a basic account</b><small>Sign in with your email and a password to see all your quotes.</small></button>
+    </div>
+    <div id="gPw" class="full" style="display:none;margin-top:1rem"><label class="l" for="pw">Choose a password (6+ characters)</label><input id="pw" type="password" autocomplete="new-password"><div class="err">Use at least 6 characters</div></div>
+    <div class="bar"><button class="btn p" id="makeQuote" type="button">Open my quote</button><button class="btn g" id="backReq" type="button">Back</button></div>
+  </section>
+
+  <!-- 3. Sign in -->
+  <section class="panel view" id="vSignin">
+    <h2>Sign in</h2>
+    <p class="sub">Use the email and password you set when you requested a quote.</p>
+    <div class="f">
+      <div id="gSe"><label class="l" for="se">Email</label><input id="se" type="email" autocomplete="email"></div>
+      <div id="gSp"><label class="l" for="sp">Password</label><input id="sp" type="password" autocomplete="current-password"><div class="err">Email or password is incorrect</div></div>
+    </div>
+    <div class="bar"><button class="btn p" id="doSignin" type="button">Sign in</button><button class="btn g" id="backReq2" type="button">Request a new quote</button></div>
+  </section>
+
+  <!-- 4. Portal -->
+  <section class="panel view" id="vPortal">
+    <div class="ph">
+      <div><h2 id="qTitle"></h2><p class="sub" id="qSub"></p></div>
+      <div class="status" id="status"></div>
+    </div>
+    <div class="note" id="linkBox"></div>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-t="quote" role="tab">Quote</button>
+      <button class="tab" data-t="sign" role="tab">Sign</button>
+      <button class="tab" data-t="chat" role="tab">Chat</button>
+      <button class="tab" data-t="pay" role="tab">Pay deposit</button>
+    </div>
+
+    <div class="pane show" id="p-quote">
+      <table id="lines"></table>
+      <p class="sub" style="margin-top:1rem">Want something changed? Open the Chat tab and tell us. We'll update the quote and you'll see it here.</p>
+      <div class="bar"><button class="btn p" data-go="sign" type="button">Review &amp; sign</button><button class="btn o" data-go="chat" type="button">Ask for changes</button></div>
+    </div>
+
+    <div class="pane" id="p-sign"></div>
+
+    <div class="pane" id="p-chat">
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="send"><input id="msg" placeholder="Type your message…" aria-label="Message"><button class="btn p" id="sendMsg" type="button">Send</button></div>
+      <div class="bar"><a class="btn wa" id="waChat" target="_blank" rel="noopener">Also message us on WhatsApp</a></div>
+    </div>
+
+    <div class="pane" id="p-pay"></div>
+  </section>
+</div>
+
+<script>
+/* ===== SETTINGS ===== */
+var CFG={
+  WHATSAPP:"254708312617", EMAIL:"Falcare@kenyan-maidens.com",
+  DEPOSIT_PCT:30,
+  PORTAL_URL:"",   /* If you host quotes on FreshBooks / Wave / HoneyBook, put your client-portal link here. Clients are sent there after requesting. */
+  PAY_URL:"",      /* Optional card/online payment link for the deposit. */
+  PAYBILL:"000000", PAY_NAME:"Falcare Services"
+};
+/* Placeholder starting prices in KES. Replace with your real rates. */
+var SERVICES=[["Nanny / Babysitter",15000,"per worker, first month"],["Dayburg house help",1500,"per worker, per day"],["Caregiver",18000,"per worker, first month"],["Domestic housekeeper",14000,"per worker, first month"],["Garden boy",12000,"per worker, first month"],["Deep cleaning (carpets, windows, post-construction)",8000,"per visit"]];
+/* ==================== */
+var KEY='falcare_quotes',DB={quotes:{},accounts:{}},cur=null;
+try{var d=JSON.parse(localStorage.getItem(KEY)||'null');if(d)DB=d}catch(e){}
+var q=function(s){return document.querySelector(s)},qa=function(s){return[].slice.call(document.querySelectorAll(s))};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){}}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function kes(n){return 'KES '+Math.round(n).toLocaleString('en-KE')}
+function day(t){return new Date(t).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})}
+function rid(n){var a=new Uint8Array(n),s='';crypto.getRandomValues(a);for(var i=0;i<n;i++)s+='abcdefghjkmnpqrstuvwxyz23456789'[a[i]%31];return s}
+function hash(t){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)).then(function(b){return[].map.call(new Uint8Array(b),function(x){return('0'+x.toString(16)).slice(-2)}).join('')})}
+function show(id){qa('.view').forEach(function(v){v.classList.toggle('show',v.id===id)});window.scrollTo({top:0,behavior:'smooth'})}
+
+q('#svc').innerHTML='<option value="">Choose a service…</option>'+SERVICES.map(function(s,i){return '<option value="'+i+'">'+esc(s[0])+'</option>'}).join('');
+
+/* ---- request ---- */
+var mode='link';
+function ok(g,c){q(g).classList.toggle('bad',!c);return c}
+q('#toAccess').onclick=function(){
+  var a=ok('#gSvc',q('#svc').value!==''),n=ok('#gName',q('#name').value.trim().length>1),p=ok('#gPhone',q('#phone').value.replace(/\D/g,'').length>=9),e=ok('#gEmail',/^\S+@\S+\.\S+$/.test(q('#email').value.trim()));
+  if(a&&n&&p&&e)show('vAccess');
+};
+q('#toSignin').onclick=function(){show('vSignin')};
+q('#backReq').onclick=q('#backReq2').onclick=function(){show('vReq')};
+qa('.opt').forEach(function(b){b.onclick=function(){mode=b.dataset.m;qa('.opt').forEach(function(o){o.classList.toggle('sel',o===b)});q('#gPw').style.display=mode==='acct'?'block':'none'}});
+q('#makeQuote').onclick=function(){
+  var email=q('#email').value.trim().toLowerCase();
+  if(mode==='acct'&&!ok('#gPw',q('#pw').value.length>=6))return;
+  var s=SERVICES[+q('#svc').value],n=Math.max(1,Math.min(20,+q('#qty').value||1)),tok=rid(16);
+  var total=s[1]*n;
+  var quote={id:tok,no:'FQ-'+Math.floor(1000+Math.random()*9000),created:Date.now(),email:email,
+    client:{name:q('#name').value.trim(),phone:q('#phone').value.trim(),area:q('#area').value.trim(),notes:q('#notes').value.trim()},
+    lines:[{d:s[0],u:s[2],qty:n,price:s[1]}],total:total,deposit:Math.round(total*CFG.DEPOSIT_PCT/100),
+    signed:null,paid:null,chat:[{from:'falcare',t:Date.now(),x:'Hello '+q('#name').value.trim().split(' ')[0]+', thanks for your request. This is your quote. Sign it when you are happy, or message us here if you want anything changed.'}]};
+  DB.quotes[tok]=quote;
+  var go=function(){save();
+    if(CFG.PORTAL_URL){location.href=CFG.PORTAL_URL;return}
+    location.hash='q='+tok;openQuote(tok,true)};
+  if(mode==='acct'){hash(q('#pw').value).then(function(h){DB.accounts[email]=h;go()})}else go();
+};
+q('#doSignin').onclick=function(){
+  var em=q('#se').value.trim().toLowerCase();
+  hash(q('#sp').value).then(function(h){
+    if(DB.accounts[em]!==h)return ok('#gSp',false);
+    ok('#gSp',true);
+    var mine=Object.keys(DB.quotes).map(function(k){return DB.quotes[k]}).filter(function(x){return x.email===em}).sort(function(a,b){return b.created-a.created});
+    if(!mine.length){q('#gSp .err').textContent='No quotes found for this account yet.';return ok('#gSp',false)}
+    location.hash='q='+mine[0].id;openQuote(mine[0].id,false);
+  });
+};
+
+/* ---- portal ---- */
+function openQuote(tok,fresh){
+  cur=DB.quotes[tok];
+  if(!cur){show('vReq');return}
+  show('vPortal');tab('quote');draw(fresh);
+}
+function link(){return location.href.split('#')[0]+'#q='+cur.id}
+function draw(fresh){
+  var c=cur;
+  q('#qTitle').textContent='Quote '+c.no+' for '+c.client.name;
+  q('#qSub').textContent='Prepared '+day(c.created);
+  q('#status').innerHTML=[['Quote sent',1],['Signed',c.signed],['Deposit '+(c.paid&&c.paid.confirmed?'paid':c.paid?'reported':'due'),c.paid]].map(function(s){return '<span class="chip'+(s[1]?' on':'')+'">'+s[0]+'</span>'}).join('');
+  q('#linkBox').innerHTML='<b>Your private link</b> (bookmark it to come back):<div class="link"><input readonly id="lk" value="'+esc(link())+'" aria-label="Private quote link"><button class="btn o" type="button" id="cp">Copy</button></div>'+
+    (fresh?'<div class="bar" style="margin-top:.2rem"><a class="btn wa" id="waReq" target="_blank" rel="noopener">Send my request to Falcare on WhatsApp</a><a class="btn o" id="mlReq">Send by email</a></div>':'');
+  q('#cp').onclick=function(){q('#lk').select();try{navigator.clipboard.writeText(q('#lk').value)}catch(e){document.execCommand('copy')}this.textContent='Copied'};
+  if(fresh){
+    var t='Hello Falcare, I requested quote '+c.no+'.\nService: '+c.lines[0].d+' x '+c.lines[0].qty+(c.client.area?'\nArea: '+c.client.area:'')+(c.client.notes?'\nDetails: '+c.client.notes:'')+'\nName: '+c.client.name+'\nPhone: '+c.client.phone+'\nEmail: '+c.email;
+    q('#waReq').href='https://wa.me/'+CFG.WHATSAPP+'?text='+encodeURIComponent(t);
+    q('#mlReq').href='mailto:'+CFG.EMAIL+'?subject='+encodeURIComponent('Quote request '+c.no)+'&body='+encodeURIComponent(t);
+  }
+  q('#lines').innerHTML='<tr><th>Item</th><th>Qty</th><th>Amount</th></tr>'+c.lines.map(function(l){return '<tr><td>'+esc(l.d)+'<br><small style="color:#6b5a7b">'+esc(l.u)+' · '+kes(l.price)+'</small></td><td>'+l.qty+'</td><td>'+kes(l.price*l.qty)+'</td></tr>'}).join('')+
+    '<tr class="tot"><td colspan="2">Total</td><td>'+kes(c.total)+'</td></tr><tr><td colspan="2">Deposit to start ('+CFG.DEPOSIT_PCT+'%)</td><td><b>'+kes(c.deposit)+'</b></td></tr>';
+  drawSign();drawChat();drawPay();
+}
+function tab(t){
+  qa('.tab').forEach(function(b){b.classList.toggle('on',b.dataset.t===t)});
+  qa('.pane').forEach(function(p){p.classList.toggle('show',p.id==='p-'+t)});
+}
+qa('.tab').forEach(function(b){b.onclick=function(){tab(b.dataset.t)}});
+document.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b)tab(b.dataset.go)});
+
+function drawSign(){
+  var c=cur,el=q('#p-sign');
+  if(c.signed){el.innerHTML='<h2>Signed</h2><p class="sub">You accepted quote '+c.no+' on '+day(c.signed.at)+'.</p><div class="sig">'+esc(c.signed.name)+'</div><div class="bar"><button class="btn p" data-go="pay" type="button">Pay deposit</button></div>';return}
+  el.innerHTML='<h2>Sign your quote</h2><p class="sub">Total '+kes(c.total)+'. Deposit '+kes(c.deposit)+' is due after you sign.</p>'+
+   '<div id="gSg"><label class="l" for="sg">Type your full name to sign</label><input id="sg" autocomplete="off"><div class="err">Type your full name</div></div>'+
+   '<label class="ck"><input type="checkbox" id="agree"><span>I accept this quote and agree to pay the deposit to start the service.</span></label>'+
+   '<button class="btn p" id="doSign" type="button">Sign quote</button>';
+  q('#doSign').onclick=function(){
+    var good=q('#sg').value.trim().length>1&&q('#agree').checked;
+    q('#gSg').classList.toggle('bad',!good);if(!good)return;
+    c.signed={name:q('#sg').value.trim(),at:Date.now()};c.chat.push({from:'sys',t:Date.now(),x:'Quote signed by '+c.signed.name+'.'});save();draw();tab('pay');
+  };
+}
+function drawChat(){
+  var c=cur;
+  q('#chat').innerHTML=c.chat.map(function(m){
+    if(m.from==='sys')return '<div class="m" style="align-self:center;background:#fff;border:1px dashed var(--line)">'+esc(m.x)+'</div>';
+    return '<div class="m'+(m.from==='me'?' me':'')+'"><small>'+(m.from==='me'?'You':'Falcare')+' · '+new Date(m.t).toLocaleTimeString('en-KE',{hour:'2-digit',minute:'2-digit'})+'</small>'+esc(m.x)+'</div>'}).join('');
+  q('#chat').scrollTop=q('#chat').scrollHeight;
+  var last=c.chat.filter(function(m){return m.from==='me'}).pop();
+  q('#waChat').href='https://wa.me/'+CFG.WHATSAPP+'?text='+encodeURIComponent('Quote '+c.no+(last?': '+last.x:''));
+}
+function sendMsg(){var v=q('#msg').value.trim();if(!v)return;cur.chat.push({from:'me',t:Date.now(),x:v});q('#msg').value='';save();drawChat()}
+q('#sendMsg').onclick=sendMsg;q('#msg').onkeydown=function(e){if(e.key==='Enter')sendMsg()};
+
+function drawPay(){
+  var c=cur,el=q('#p-pay');
+  if(!c.signed){el.innerHTML='<h2>Pay deposit</h2><p class="sub">Sign your quote first. Then you can pay the '+kes(c.deposit)+' deposit here.</p><button class="btn p" data-go="sign" type="button">Go to signing</button>';return}
+  if(c.paid){el.innerHTML='<h2>Deposit '+(c.paid.confirmed?'received':'reported')+'</h2><p class="sub">'+(c.paid.confirmed?'Thank you. We will contact you to schedule the start.':'We have your M-Pesa code ('+esc(c.paid.code)+'). We will confirm once we see the payment.')+'</p>';return}
+  el.innerHTML='<h2>Pay '+kes(c.deposit)+' deposit</h2><p class="sub">Choose how you want to pay.</p>'+
+   (CFG.PAY_URL?'<a class="btn p" href="'+esc(CFG.PAY_URL)+'" target="_blank" rel="noopener">Pay online</a><p class="sub" style="margin-top:1rem">Or pay with M-Pesa below.</p>':'')+
+   '<div class="note"><b>M-Pesa Paybill</b><br>Business no: <b>'+esc(CFG.PAYBILL)+'</b> ('+esc(CFG.PAY_NAME)+')<br>Account no: <b>'+esc(c.no)+'</b><br>Amount: <b>'+kes(c.deposit)+'</b></div>'+
+   '<div id="gCode" style="margin-top:1rem"><label class="l" for="code">M-Pesa confirmation code</label><input id="code" placeholder="e.g. SJK4L2M9QX" autocapitalize="characters"><div class="err">Enter the code from your M-Pesa message</div></div>'+
+   '<div class="bar"><button class="btn p" id="paid" type="button">I have paid</button></div>';
+  q('#paid').onclick=function(){
+    var v=q('#code').value.trim().toUpperCase();q('#gCode').classList.toggle('bad',v.length<8);if(v.length<8)return;
+    c.paid={code:v,at:Date.now(),confirmed:false};c.chat.push({from:'sys',t:Date.now(),x:'Deposit reported. M-Pesa code '+v+'.'});save();draw();
+  };
+}
+
+/* ---- open from private link ---- */
+function fromHash(){var m=location.hash.match(/^#q=([a-z0-9]+)$/);if(m&&DB.quotes[m[1]]&&!(cur&&cur.id===m[1]))openQuote(m[1],false)}
+window.addEventListener('hashchange',fromHash);fromHash();
+</script>
+</body>
+</html>
